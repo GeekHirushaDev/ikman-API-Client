@@ -5,6 +5,7 @@
 module.exports = {
   BASE_URL: 'https://ikman.lk',
   SEARCH_URL: 'https://ikman.lk/en/ads/sri-lanka',
+  SEARCH_ACCESS_LIMIT: 400,
 
   SORT_OPTIONS: {
     PRICE_ASC: 'price-asc',

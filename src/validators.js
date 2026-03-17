@@ -22,6 +22,7 @@ const schemas = {
 
   searchOptions: Joi.object({
     maxPages: Joi.number().integer().min(1).max(1000),
+    respectAccessLimit: Joi.boolean(),
     headless: Joi.boolean(),
     timeout: Joi.number().integer().min(5000).max(300000),
     sortBy: Joi.string().valid(

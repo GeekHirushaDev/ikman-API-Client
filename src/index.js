@@ -2,7 +2,7 @@
  * ikman-api-client - Complete API client for ikman.lk
  */
 
-const { searchListings } = require('./searchClient');
+const { searchListings, getSearchSummary } = require('./searchClient');
 const { getAdDetails } = require('./adClient');
 const { processAdsBatch, getImagesFromUrls } = require('./batchClient');
 const utils = require('./utils');
@@ -12,6 +12,7 @@ const { version } = require('../package.json');
 module.exports = {
   search: searchListings,
   searchListings,
+  getSearchSummary,
   getAd: getAdDetails,
   getAdDetails,
   batch: processAdsBatch,

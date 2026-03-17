@@ -1,6 +1,8 @@
 /**
  * Search client for ikman.lk using Puppeteer
  */
+const axios = require('axios');
+const { JSDOM } = require('jsdom');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const {
@@ -12,12 +14,45 @@ const {
   exportToJSON,
   generateStats
 } = require('./utils');
-const { DEFAULTS, SORT_OPTIONS, SORT_PARAMS, USER_AGENTS, ERRORS, SEARCH_URL } = require('./constants');
+const {
+  DEFAULTS,
+  SORT_OPTIONS,
+  SORT_PARAMS,
+  USER_AGENTS,
+  ERRORS,
+  SEARCH_URL,
+  SEARCH_ACCESS_LIMIT
+} = require('./constants');
 const { validateSearch } = require('./validators');
 
 puppeteer.use(StealthPlugin());
 
-async function searchListings(keyword, options = {}) {
+function extractSearchSummaryFromHTML(html) {
+  const dom = new JSDOM(html, { runScripts: 'dangerously' });
+  const { window } = dom;
+
+  if (!window.initialData) {
+    throw new Error('Could not find window.initialData in search page');
+  }
+
+  const initialData = window.initialData;
+  const pagination = initialData?.serp?.ads?.data?.paginationData || {};
+  const postedAdCount = initialData?.serp?.ads?.data?.postedAdCount;
+  const pageSize = pagination.pageSize || 25;
+  const totalCount = Number(pagination.total ?? postedAdCount ?? 0);
+  const accessibleCount = Math.min(totalCount, SEARCH_ACCESS_LIMIT);
+
+  return {
+    total_count: totalCount,
+    accessible_count: accessibleCount,
+    is_capped: totalCount > SEARCH_ACCESS_LIMIT,
+    access_limit: SEARCH_ACCESS_LIMIT,
+    page_size: pageSize,
+    max_accessible_pages: Math.ceil(accessibleCount / pageSize)
+  };
+}
+
+async function getSearchSummary(keyword, options = {}) {
   const { keyword: validatedKeyword, options: validatedOptions } = validateSearch(keyword, options);
 
   const config = {
@@ -26,11 +61,69 @@ async function searchListings(keyword, options = {}) {
     sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy
   };
 
+  const sortParam = SORT_PARAMS[config.sortBy];
+  const url = `${SEARCH_URL}?page=1&query=${encodeURIComponent(validatedKeyword)}&sort=${sortParam}`;
+
+  const response = await axios.get(url, {
+    timeout: config.timeout,
+    headers: {
+      'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)],
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.9'
+    }
+  });
+
+  const summary = extractSearchSummaryFromHTML(response.data);
+
+  return {
+    keyword: validatedKeyword,
+    sort_by: config.sortBy,
+    ...summary
+  };
+}
+
+async function searchListings(keyword, options = {}) {
+  const { keyword: validatedKeyword, options: validatedOptions } = validateSearch(keyword, options);
+
+  const config = {
+    ...DEFAULTS.SEARCH,
+    ...validatedOptions,
+    respectAccessLimit: validatedOptions.respectAccessLimit !== false,
+    sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy
+  };
+
   logger.info(`🚀 Starting search for: "${validatedKeyword}"`);
   logger.info(`📊 Sort method: ${config.sortBy}`);
 
   if (!SORT_OPTIONS[config.sortBy.toUpperCase().replace('-', '_')]) {
     throw new Error(ERRORS.INVALID_SORT_OPTION);
+  }
+
+  let searchSummary = null;
+  let maxPagesToProcess = config.maxPages;
+
+  try {
+    searchSummary = await getSearchSummary(validatedKeyword, config);
+
+    if (config.respectAccessLimit) {
+      maxPagesToProcess = Math.min(config.maxPages, searchSummary.max_accessible_pages || config.maxPages);
+    }
+
+    if (config.verbose) {
+      logger.info(`📌 Total results: ${searchSummary.total_count}`);
+      logger.info(`📌 Accessible results: ${searchSummary.accessible_count}`);
+      if (searchSummary.is_capped) {
+        logger.warn(`Result set is capped to latest ${SEARCH_ACCESS_LIMIT} by ikman visibility limits.`);
+      }
+    }
+
+    if ((searchSummary.accessible_count || 0) === 0) {
+      return [];
+    }
+  } catch (error) {
+    if (config.verbose) {
+      logger.warn(`Could not prefetch result count: ${error.message}. Continuing with direct paging.`);
+    }
   }
 
   const browser = await puppeteer.launch({
@@ -60,15 +153,15 @@ async function searchListings(keyword, options = {}) {
     'Upgrade-Insecure-Requests': '1'
   });
 
-  const progressBar = config.verbose ? createProgressBar(config.maxPages) : null;
-  if (progressBar) progressBar.start(config.maxPages, 0);
+  const progressBar = config.verbose ? createProgressBar(maxPagesToProcess) : null;
+  if (progressBar) progressBar.start(maxPagesToProcess, 0);
 
-  for (let i = 1; i <= config.maxPages; i += 1) {
+  for (let i = 1; i <= maxPagesToProcess; i += 1) {
     const sortParam = SORT_PARAMS[config.sortBy];
     const url = `${SEARCH_URL}?page=${i}&query=${encodeURIComponent(validatedKeyword)}&sort=${sortParam}`;
 
     if (config.verbose && !progressBar) {
-      logger.progress(`Page ${i}/${config.maxPages}: Fetching...`);
+      logger.progress(`Page ${i}/${maxPagesToProcess}: Fetching...`);
     }
 
     try {
@@ -144,6 +237,9 @@ async function searchListings(keyword, options = {}) {
   const stats = {
     ...generateStats(allAds),
     pages_processed: pagesProcessed,
+    total_count: searchSummary?.total_count,
+    accessible_count: searchSummary?.accessible_count,
+    access_limit: SEARCH_ACCESS_LIMIT,
     keyword: validatedKeyword,
     sort_by: config.sortBy
   };
@@ -161,5 +257,7 @@ async function searchListings(keyword, options = {}) {
 }
 
 module.exports = {
-  searchListings
+  searchListings,
+  getSearchSummary,
+  extractSearchSummaryFromHTML
 };

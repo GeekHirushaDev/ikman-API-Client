@@ -119,10 +119,13 @@ console.log(results[0].images); // Images for first link
 
 Search for listings by keyword.
 
+Note: search now uses a count-first flow internally. It first reads total results from page source (`window.initialData`) and then loads pages. By default, it respects ikman visibility limits and only processes up to latest 400 results.
+
 **Parameters:**
 - `keyword` *(string, required)* — Search term (1-200 characters)
 - `options` *(object, optional)*
   - `maxPages` (number) — Pages to fetch. Default: `100`. Range: 1-1000
+  - `respectAccessLimit` (boolean) — If `true` (default), limits fetching to ikman accessible max results (400)
   - `sortBy` (string) — Sort results. Options: `price-asc`, `price-desc`, `date-asc`, `date-desc`, `relevance`. Default: `price-asc`
   - `headless` (boolean) — Run browser in headless mode. Default: `true`
   - `timeout` (number) — Page load timeout in ms. Default: `90000`. Range: 5000-300000
@@ -161,6 +164,39 @@ const ads = await search('iPhone', {
 });
 
 ads.forEach(ad => console.log(`${ad.title} — Rs ${ad.price}`));
+```
+
+---
+
+### `getSearchSummary(keyword, options)` → `Promise<SearchSummary>`
+
+Fast method to read search counts before loading all pages.
+
+**Returns:**
+```javascript
+{
+  keyword: 'pixel 8 pro',
+  sort_by: 'date-desc',
+  total_count: 288,
+  accessible_count: 288,
+  is_capped: false,
+  access_limit: 400,
+  page_size: 25,
+  max_accessible_pages: 12
+}
+```
+
+When `total_count` is above `400`, `accessible_count` is capped at `400` and max pages become `16`.
+
+**Example:**
+```javascript
+const { getSearchSummary, search } = require('ikman-api-client');
+
+const summary = await getSearchSummary('pixel 8 pro', { sortBy: 'date-desc' });
+console.log(summary.total_count, summary.accessible_count);
+
+const ads = await search('pixel 8 pro', { sortBy: 'date-desc' });
+// search uses summary first and fetches only accessible pages
 ```
 
 ---

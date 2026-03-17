@@ -123,6 +123,7 @@ declare module 'ikman-api-client' {
 
   export interface SearchOptions {
     maxPages?: number;
+    respectAccessLimit?: boolean;
     headless?: boolean;
     timeout?: number;
     sortBy?: 'price-asc' | 'price-desc' | 'date-asc' | 'date-desc' | 'relevance';
@@ -153,6 +154,19 @@ declare module 'ikman-api-client' {
 
   export function search(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
   export function searchListings(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
+  export function getSearchSummary(
+    keyword: string,
+    options?: SearchOptions
+  ): Promise<{
+    keyword: string;
+    sort_by: 'price-asc' | 'price-desc' | 'date-asc' | 'date-desc' | 'relevance';
+    total_count: number;
+    accessible_count: number;
+    is_capped: boolean;
+    access_limit: number;
+    page_size: number;
+    max_accessible_pages: number;
+  }>;
 
   export function getAd(url: string, options?: AdPageOptions): Promise<DetailedAd>;
   export function getAdDetails(url: string, options?: AdPageOptions): Promise<DetailedAd>;
