@@ -41,9 +41,10 @@ module.exports = {
       fileName: 'ikman_results.json',
       verbose: true,
       includeRaw: false,
+      retries: 3,
       delay: {
-        min: 2000,
-        max: 4000
+        min: 1000,
+        max: 2000
       }
     },
     AD_PAGE: {

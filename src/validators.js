@@ -25,6 +25,7 @@ const schemas = {
     respectAccessLimit: Joi.boolean(),
     headless: Joi.boolean(),
     timeout: Joi.number().integer().min(5000).max(300000),
+    retries: Joi.number().integer().min(0).max(10),
     sortBy: Joi.string().valid(
       'price-asc',
       'price-desc',

@@ -1,10 +1,8 @@
 /**
- * Search client for ikman.lk using Puppeteer
+ * Search client for ikman.lk using HTTP requests (axios + jsdom)
  */
 const axios = require('axios');
 const { JSDOM } = require('jsdom');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const {
   logger,
   formatPrice,
@@ -24,8 +22,6 @@ const {
   SEARCH_ACCESS_LIMIT
 } = require('./constants');
 const { validateSearch } = require('./validators');
-
-puppeteer.use(StealthPlugin());
 
 function extractSearchSummaryFromHTML(html) {
   const dom = new JSDOM(html, { runScripts: 'dangerously' });
@@ -52,6 +48,89 @@ function extractSearchSummaryFromHTML(html) {
   };
 }
 
+function extractPageData(html) {
+  const dom = new JSDOM(html, { runScripts: 'dangerously' });
+  const { window } = dom;
+
+  if (!window.initialData) {
+    return { ads: [], pagination: null };
+  }
+
+  const initialData = window.initialData;
+  const ads = initialData?.serp?.ads?.data?.ads || [];
+  const pagination = initialData?.serp?.ads?.data?.paginationData || null;
+
+  return { ads, pagination };
+}
+
+async function fetchPageWithRetry(url, config, maxRetries = 3) {
+  let lastError;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await axios.get(url, {
+        timeout: config.timeout,
+        headers: {
+          'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)],
+          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          Connection: 'keep-alive',
+          'Upgrade-Insecure-Requests': '1'
+        }
+      });
+      return response.data;
+    } catch (err) {
+      const status = err.response?.status;
+
+      if (status === 404) {
+        throw new Error(`Page not found (404): ${url}`);
+      }
+
+      if (status === 429) {
+        if (attempt < maxRetries) {
+          const waitTime = 2 ** (attempt + 1) * 2000;
+          if (config.verbose) {
+            logger.warn(`Rate limited (429). Waiting ${waitTime / 1000}s before retry ${attempt + 1}/${maxRetries}...`);
+          }
+          // eslint-disable-next-line no-await-in-loop
+          await delay(waitTime, waitTime + 1000);
+          lastError = err;
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+        throw new Error('Rate limited (429). Max retries exceeded.');
+      }
+
+      if (status === 500) {
+        if (attempt < maxRetries) {
+          const waitTime = 2 ** attempt * 1000;
+          if (config.verbose) {
+            logger.warn(`Server error (500). Waiting ${waitTime / 1000}s before retry ${attempt + 1}/${maxRetries}...`);
+          }
+          // eslint-disable-next-line no-await-in-loop
+          await delay(waitTime, waitTime + 500);
+          lastError = err;
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+        throw new Error(`Server error (500): ${url}`);
+      }
+
+      lastError = err;
+      if (attempt < maxRetries) {
+        const waitTime = 2 ** attempt * 1000;
+        if (config.verbose) {
+          logger.warn(`Request failed: ${err.message}. Retry ${attempt + 1}/${maxRetries} in ${waitTime / 1000}s...`);
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await delay(waitTime, waitTime + 500);
+      }
+    }
+  }
+
+  throw lastError;
+}
+
 async function getSearchSummary(keyword, options = {}) {
   const { keyword: validatedKeyword, options: validatedOptions } = validateSearch(keyword, options);
 
@@ -62,18 +141,9 @@ async function getSearchSummary(keyword, options = {}) {
   };
 
   const sortParam = SORT_PARAMS[config.sortBy];
-  const url = `${SEARCH_URL}?page=1&query=${encodeURIComponent(validatedKeyword)}&sort=${sortParam}`;
-
-  const response = await axios.get(url, {
-    timeout: config.timeout,
-    headers: {
-      'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)],
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9'
-    }
-  });
-
-  const summary = extractSearchSummaryFromHTML(response.data);
+  const url = `${SEARCH_URL}?sort=${sortParam}&query=${encodeURIComponent(validatedKeyword)}&page=1`;
+  const html = await fetchPageWithRetry(url, config);
+  const summary = extractSearchSummaryFromHTML(html);
 
   return {
     keyword: validatedKeyword,
@@ -89,7 +159,8 @@ async function searchListings(keyword, options = {}) {
     ...DEFAULTS.SEARCH,
     ...validatedOptions,
     respectAccessLimit: validatedOptions.respectAccessLimit !== false,
-    sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy
+    sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy,
+    retries: validatedOptions.retries ?? DEFAULTS.SEARCH.retries
   };
 
   logger.info(`🚀 Starting search for: "${validatedKeyword}"`);
@@ -126,61 +197,23 @@ async function searchListings(keyword, options = {}) {
     }
   }
 
-  const browser = await puppeteer.launch({
-    headless: config.headless ? 'new' : false,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--disable-gpu',
-      '--window-size=1280,800'
-    ]
-  });
-
-  const page = await browser.newPage();
   const allAds = [];
   let pagesProcessed = 0;
-
-  const userAgent = USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
-  await page.setUserAgent(userAgent);
-  await page.setViewport({ width: 1280, height: 800 });
-
-  await page.setExtraHTTPHeaders({
-    'Accept-Language': 'en-US,en;q=0.9',
-    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    Connection: 'keep-alive',
-    'Upgrade-Insecure-Requests': '1'
-  });
+  const sortParam = SORT_PARAMS[config.sortBy];
 
   const progressBar = config.verbose ? createProgressBar(maxPagesToProcess) : null;
   if (progressBar) progressBar.start(maxPagesToProcess, 0);
 
   for (let i = 1; i <= maxPagesToProcess; i += 1) {
-    const sortParam = SORT_PARAMS[config.sortBy];
-    const url = `${SEARCH_URL}?page=${i}&query=${encodeURIComponent(validatedKeyword)}&sort=${sortParam}`;
+    const url = `${SEARCH_URL}?sort=${sortParam}&query=${encodeURIComponent(validatedKeyword)}&page=${i}`;
 
     if (config.verbose && !progressBar) {
       logger.progress(`Page ${i}/${maxPagesToProcess}: Fetching...`);
     }
 
     try {
-      await page.goto(url, {
-        waitUntil: 'networkidle2',
-        timeout: config.timeout
-      });
-
-      const pageTitle = await page.title();
-      if (pageTitle.toLowerCase().includes('captcha') || pageTitle.toLowerCase().includes('blocked')) {
-        throw new Error(ERRORS.CAPTCHA_DETECTED);
-      }
-
-      const pageData = await page.evaluate(() => {
-        if (globalThis.initialData?.serp?.ads?.data?.ads) {
-          return globalThis.initialData.serp.ads.data.ads;
-        }
-        return null;
-      });
+      const html = await fetchPageWithRetry(url, config, config.retries);
+      const { ads: pageData } = extractPageData(html);
 
       if (!pageData || pageData.length === 0) {
         if (config.verbose && !progressBar) {
@@ -219,7 +252,10 @@ async function searchListings(keyword, options = {}) {
         logger.success(`Loaded ${pageAds.length} items (Total: ${allAds.length})`);
       }
 
-      await delay(config.delay.min, config.delay.max);
+      if (i < maxPagesToProcess) {
+        // eslint-disable-next-line no-await-in-loop
+        await delay(config.delay.min, config.delay.max);
+      }
     } catch (err) {
       if (config.verbose) {
         logger.error(`Error on page ${i}: ${err.message}`);
@@ -227,8 +263,6 @@ async function searchListings(keyword, options = {}) {
       if (!err.message.toLowerCase().includes('timeout')) break;
     }
   }
-
-  await browser.close();
 
   if (progressBar) {
     progressBar.stop();
