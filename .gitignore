@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+.nyc_output/
+*.log
+.env
+dist/
+tmp/
+*.local
+ikman_results.json
+ikman_batch_results.json
+*.csv

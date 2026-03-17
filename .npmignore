@@ -1,0 +1,6 @@
+tests/
+examples/
+coverage/
+.github/
+.vscode/
+*.log

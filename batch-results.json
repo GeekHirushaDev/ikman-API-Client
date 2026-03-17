@@ -1,0 +1,973 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-17T07:59:41.484Z",
+    "total_urls": 5,
+    "successful": 5,
+    "failed": 0,
+    "config": {
+      "concurrency": 3,
+      "delay": 1000,
+      "saveToFile": true,
+      "fileName": "batch-results.json",
+      "verbose": true
+    }
+  },
+  "results": [
+    {
+      "id": "699c34abe0309057d8bcc2c6",
+      "title": "(KH720) Furnished Two Storey Luxury House for Sale in Ja-Ela Lake City",
+      "description": "￭ Two Storey Luxury House  \n￭ Fully Furnished & Fully Air Conditioned  \n￭ Ideal for Modern Family Living  \n￭ Peaceful Residential Environment  \n\n\t🟩 Property Features  \n\n    ⭕️ 3 Bedrooms  \n    ⭕️ 2 Bathrooms  \n    ⭕️ Living Area  \n    ⭕️ Dining Area  \n    ⭕️ Kitchen  \n    ⭕️ Balcony  \n    ⭕️ Fully Tiled Floors  \n    ⭕️ Ceiling Fans  \n    ⭕️ Finishing Roof  \n    ⭕️ Garden Space  \n\n\t🟩 Amenities  \n\n    ⭕️ Own Parking Space  \n    ⭕️ Surrounding Boundary Wall  \n    ⭕️ Wicket Gate  \n    ⭕️ Water Supply  \n    ⭕️ Electricity  \n    ⭕️ Clear Deed   \n\n\nViewings can be arranged by prior appointment only  \n\n♻️ Close Areas –  \n        Easy Access to Ja-Ela Town  \n        Close to Main Road & Public Transport  \n        Convenient Access to Schools, Supermarkets & Banks  \n\n♻️ All infrastructure facilities available including waste collection service  \n♻️ No legal or financial issues associated with the property  \n\n    🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹  \n\n📞  Feel free to call for an appointment or for More information Contact  \n    PEO Land Real Estate (Pvt) Ltd  \n\n        GENUINE BUYERS ONLY  \n        *NO BROKERS*  \n        (බ්‍රෝකර්වරු ඇමතීමෙන් වලකින්න)  \n\nSocial Media :  \nFacebook | YouTube | WhatsApp| Instagram | Tiktok| peolands.com| Peo Land Real Estate (Pvt) Ltd  ",
+      "url": "http://ikman.lk/en/ad/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+      "slug": "kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+      "type": "for_sale",
+      "price": "Rs 22,000,000",
+      "price_raw": "Rs 22,000,000",
+      "price_numeric": 22,
+      "negotiable": true,
+      "location": "Ja-Ela, Gampaha",
+      "city": "Ja-Ela",
+      "district": "Gampaha",
+      "location_id": 1583,
+      "district_id": 1577,
+      "category": "Houses For Sale",
+      "category_slug": "houses-for-sale",
+      "category_id": 415,
+      "parent_category": "Property",
+      "parent_category_id": 409,
+      "posted_date": "23 Feb 4:36 pm",
+      "posted_at": "2026-02-23T16:36:49+05:30",
+      "expires_at": "2026-04-24T11:06:49.000Z",
+      "posted_timestamp": 1771844809000,
+      "views": 244,
+      "seller": {
+        "id": "66e03420e0e1c1001f1506fc",
+        "name": "Primetime Properties",
+        "is_member": true,
+        "is_verified": true,
+        "is_featured": false,
+        "membership_level": "premium",
+        "member_since": "September 2024",
+        "shop": {
+          "id": "66e3c4253416b90001312820",
+          "name": "Primetime Properties",
+          "slug": "primetime-properties-",
+          "logo": "https://i.ikman-st.com/u/primetime-properties-/5570b36e-b225-4ba6-a4ca-41f21890a77d/48/36/cropped.jpg",
+          "email": "peoholding4@gmail.com"
+        }
+      },
+      "contact": {
+        "phone_numbers": [
+          {
+            "number": "0775441504",
+            "verified": true
+          },
+          {
+            "number": "0772404160",
+            "verified": true
+          }
+        ],
+        "chat_enabled": true,
+        "email": "peoholding4@gmail.com"
+      },
+      "bedrooms": "3",
+      "bathrooms": "2",
+      "house_size": "1,180.0 sqft",
+      "land_size": "4.3 perches",
+      "address": "Lake City, Ja-Ela  ",
+      "images": [
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/207f89ca-eca2-4212-8002-ebe0ad99993a",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/5694e8d9-4cca-4f90-958b-2f4c1c7166fb",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/3b60957c-f9c4-45c3-8f53-9c48099cda68",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/11e4dea1-cb3c-4e61-ad8e-6c2dfe356b1b",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/4a9aa043-c740-4291-bd16-c22e12b1efca",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/dfc0adbe-e2c2-4fc2-89fb-829d980184c6",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/3d441d28-6c05-4aa1-9376-68a74b6d2963",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/8f44bac6-888e-4d06-899b-13aadc05ddc9",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/44b439bf-208a-49d3-a61a-ee46d3f75c5c",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/24f60b2c-76ce-432a-bdbd-f065450fc28a",
+        "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/95845c8c-db75-4365-82a4-51b09184bdfe"
+      ],
+      "main_image": "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/207f89ca-eca2-4212-8002-ebe0ad99993a/142/107/cropped.jpg",
+      "image_count": 11,
+      "is_promoted": false,
+      "is_doorstep_delivery": false,
+      "is_safe_buy": false,
+      "similar_ads": [
+        {
+          "id": "699c34eb200f2b89277cbc55",
+          "title": "(KH721) Furnished Two Storey House for Sale in Lake City – Ja-Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/9126b069-4017-4014-b27f-aeaec6cabbc7/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "22 days"
+        },
+        {
+          "id": "69b6490933673b57e16932f3",
+          "title": "(KH720) 3BR Two Storey Luxury House for Sale in Ja-Ela – Lake City",
+          "price": "Rs 22,000,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh720-3br-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh720-3br-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/32f73c44-695d-4ce6-adc4-398142fbce03/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "2 days"
+        },
+        {
+          "id": "69b8b72f2e2f8f75af3d2261",
+          "title": "(K568) Two Storey House for Sale in Ja Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2/13124bf0-8381-46eb-ace7-cf6f92509e63/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69ad887c2c0168eb3677d54c",
+          "title": "(KH740) Luxury Two storey house for sale in Gampaha",
+          "price": "Rs 55,000,000",
+          "price_numeric": 55,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/c3edb16e-8516-4944-b9a8-8dcc1ba553ff/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "9 days"
+        },
+        {
+          "id": "69ae52a2f02ca672ab7bf780",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/d7b23cd6-e100-44b4-a4be-60d86bcddcc1/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "8 days"
+        },
+        {
+          "id": "69b50af0e8f05389536b265e",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57/3b26c251-b18e-414d-9c21-a743f30c2416/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "3 days"
+        },
+        {
+          "id": "69b2525e82b8170ef5e543c3",
+          "title": "(K424) Luxury 2 Story House sale in Bopitya Ja Ela",
+          "price": "Rs 52,500,000",
+          "price_numeric": 52,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31",
+          "image": "https://i.ikman-st.com/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31/3f06b041-f7e8-44ab-b4bd-63c2ba70dcab/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "5 days"
+        },
+        {
+          "id": "69b118c95424c82c131e5bcf",
+          "title": "(K674) Single Storey House for Sale in Ja Ela",
+          "price": "Rs 23,000,000",
+          "price_numeric": 23,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3",
+          "image": "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/b86b0bd3-ebfb-436a-935a-926e4266470a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 days"
+        },
+        {
+          "id": "69afa0fe71524d66908e24a4",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131/6c62851d-a26a-45a8-bfb9-2a2efa98019b/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "7 days"
+        },
+        {
+          "id": "69b39627321fe489c4e665f1",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132/b092cf99-28e8-40a9-a4ff-98e2b91809f8/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "4 days"
+        }
+      ],
+      "request_index": 0,
+      "request_timestamp": "2026-03-17T07:59:39.361Z"
+    },
+    {
+      "id": "699c34eb200f2b89277cbc55",
+      "title": "(KH721) Furnished Two Storey House for Sale in Lake City – Ja-Ela",
+      "description": "￭ Luxury Fully Air Conditioned House  \n￭ Fully Furnished  \n￭ Located in Secured Residential Scheme  \n￭ Ideal for Modern Family Living  \n\n\t🟩 Property Features  \n\n    ⭕️ 4 Bedrooms (All A/C)  \n    ⭕️ 3 Attached Bathrooms  \n    ⭕️ Fully Tiled Floors  \n    ⭕️ Spotlights Ceiling  \n    ⭕️ Modern Pantry  \n    ⭕️ Living Area  \n    ⭕️ Dining Area  \n    ⭕️ Servant’s Quarters  \n    ⭕️ Servant’s Washroom  \n    ⭕️ Garden Space  \n    ⭕️ Hot Water with Solar  \n    ⭕️ Satellite TV Connection  \n    ⭕️ 9 Inch Boundary Wall  \n\n\t🟩 Amenities  \n\n    ⭕️ Car Parking  \n    ⭕️ 24 Hour Security  \n    ⭕️ Common Swimming Pool  \n    ⭕️ Gymnasium (Free for Residents)  \n    ⭕️ Badminton Court  \n    ⭕️ Garbage Collection & Disposal  \n    ⭕️ Periodic Septic Tank Cleaning  \n    ⭕️ Street Lighting (Main & By Roads)  \n    ⭕️ Road & Drain Maintenance  \n    ⭕️ On-Call House Maintenance Service  \n    ⭕️ Water Supply  \n    ⭕️ Electricity  \n    ⭕️ Clear Deed  \n\n\nViewings can be arranged by prior appointment only  \n\n♻️ Close Areas –  \n        Easy Access to Ja-Ela Town  \n        Close to Main Road & Public Transport  \n        Convenient Access to Schools, Supermarkets & Banks  \n\n♻️ All infrastructure facilities available including waste collection service  \n♻️ No legal or financial issues associated with the property  \n\n    🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹  \n\n📞  Feel free to call for an appointment or for More information Contact  \n    PEO Land Real Estate (Pvt) Ltd  \n\n        GENUINE BUYERS ONLY  \n        *NO BROKERS*  \n        (බ්‍රෝකර්වරු ඇමතීමෙන් වලකින්න)  \n\nSocial Media :  \nFacebook | YouTube | WhatsApp| Instagram | Tiktok| peolands.com| Peo Land Real Estate (Pvt) Ltd  ",
+      "url": "http://ikman.lk/en/ad/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+      "slug": "kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+      "type": "for_sale",
+      "price": "Rs 39,000,000",
+      "price_raw": "Rs 39,000,000",
+      "price_numeric": 39,
+      "negotiable": true,
+      "location": "Ja-Ela, Gampaha",
+      "city": "Ja-Ela",
+      "district": "Gampaha",
+      "location_id": 1583,
+      "district_id": 1577,
+      "category": "Houses For Sale",
+      "category_slug": "houses-for-sale",
+      "category_id": 415,
+      "parent_category": "Property",
+      "parent_category_id": 409,
+      "posted_date": "23 Feb 4:37 pm",
+      "posted_at": "2026-02-23T16:37:54+05:30",
+      "expires_at": "2026-04-24T11:07:54.000Z",
+      "posted_timestamp": 1771844874000,
+      "views": 137,
+      "seller": {
+        "id": "66e03420e0e1c1001f1506fc",
+        "name": "Primetime Properties",
+        "is_member": true,
+        "is_verified": true,
+        "is_featured": false,
+        "membership_level": "premium",
+        "member_since": "September 2024",
+        "shop": {
+          "id": "66e3c4253416b90001312820",
+          "name": "Primetime Properties",
+          "slug": "primetime-properties-",
+          "logo": "https://i.ikman-st.com/u/primetime-properties-/5570b36e-b225-4ba6-a4ca-41f21890a77d/48/36/cropped.jpg",
+          "email": "peoholding4@gmail.com"
+        }
+      },
+      "contact": {
+        "phone_numbers": [
+          {
+            "number": "0775441504",
+            "verified": true
+          },
+          {
+            "number": "0772404160",
+            "verified": true
+          }
+        ],
+        "chat_enabled": true,
+        "email": "peoholding4@gmail.com"
+      },
+      "bedrooms": "4",
+      "bathrooms": "3",
+      "house_size": "2,400.0 sqft",
+      "land_size": "7.0 perches",
+      "address": "Lake City, Ja-Ela  ",
+      "images": [
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/9126b069-4017-4014-b27f-aeaec6cabbc7",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/3fbd0fee-790a-4b52-8ef7-e3a985dc155a",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/382317e6-b0c2-4b56-b121-d6024864d758",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/7cc6ef83-025e-4ac5-811d-79c7668e5de9",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/01590bba-b918-4703-b400-d3956e994aa0",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/01eebb83-9a94-4143-923c-546dae0eeec8",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/57a671c9-0098-4d05-a4fe-eed8cdb2f94c",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/e531acbe-46e3-4f53-9211-ab5b9cc81f84",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/67257eba-e883-4ba3-9925-ad2ca8ddebaa",
+        "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/96561ec1-182a-42ca-9be9-4238135dc9b1"
+      ],
+      "main_image": "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/9126b069-4017-4014-b27f-aeaec6cabbc7/142/107/cropped.jpg",
+      "image_count": 10,
+      "is_promoted": false,
+      "is_doorstep_delivery": false,
+      "is_safe_buy": false,
+      "similar_ads": [
+        {
+          "id": "699c34abe0309057d8bcc2c6",
+          "title": "(KH720) Furnished Two Storey Luxury House for Sale in Ja-Ela Lake City",
+          "price": "Rs 22,000,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/207f89ca-eca2-4212-8002-ebe0ad99993a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "22 days"
+        },
+        {
+          "id": "69b6490933673b57e16932f3",
+          "title": "(KH720) 3BR Two Storey Luxury House for Sale in Ja-Ela – Lake City",
+          "price": "Rs 22,000,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh720-3br-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh720-3br-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/32f73c44-695d-4ce6-adc4-398142fbce03/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "2 days"
+        },
+        {
+          "id": "69b8b72f2e2f8f75af3d2261",
+          "title": "(K568) Two Storey House for Sale in Ja Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2/13124bf0-8381-46eb-ace7-cf6f92509e63/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69ae52a2f02ca672ab7bf780",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/d7b23cd6-e100-44b4-a4be-60d86bcddcc1/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "8 days"
+        },
+        {
+          "id": "69b50af0e8f05389536b265e",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57/3b26c251-b18e-414d-9c21-a743f30c2416/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "3 days"
+        },
+        {
+          "id": "69b118c95424c82c131e5bcf",
+          "title": "(K674) Single Storey House for Sale in Ja Ela",
+          "price": "Rs 23,000,000",
+          "price_numeric": 23,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3",
+          "image": "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/b86b0bd3-ebfb-436a-935a-926e4266470a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 days"
+        },
+        {
+          "id": "69afa0fe71524d66908e24a4",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131/6c62851d-a26a-45a8-bfb9-2a2efa98019b/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "7 days"
+        },
+        {
+          "id": "69b39627321fe489c4e665f1",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132/b092cf99-28e8-40a9-a4ff-98e2b91809f8/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "4 days"
+        },
+        {
+          "id": "69b256b904e532d7b5e543c9",
+          "title": "(KH732) 2BR House for Sale in Lake City Ja Ela",
+          "price": "Rs 22,000,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh732-2br-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh732-2br-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/15d26a6e-5868-4a4a-b477-23438b34fb09/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "5 days"
+        },
+        {
+          "id": "699fb0fb8e69cc130d5e08a3",
+          "title": "(B256) Single Storey House for Sale in Ja Ela, Kotugoda",
+          "price": "Rs 13,500,000",
+          "price_numeric": 13,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4",
+          "image": "https://i.ikman-st.com/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4/72af3341-c0f1-4f3d-9a0d-d3274bab9bd9/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "19 days"
+        }
+      ],
+      "request_index": 1,
+      "request_timestamp": "2026-03-17T07:59:39.959Z"
+    },
+    {
+      "id": "69ad887c2c0168eb3677d54c",
+      "title": "(KH740) Luxury Two storey house for sale in Gampaha",
+      "description": "\t• Located near Miriswatta Junction – Gampaha\n  \t• Peaceful and safe residential environment\n\n\n    ◉ Prperty Features\n\n    ➤ 05 bedrooms\n    ➤ 04 bathrooms\n    ➤ Living area\n    ➤ Dining area\n    ➤ TV Lobby\n    ➤ Store Room\n    ➤ Servent Room\n    ➤ Servent Bathroom\n    ➤ Kitchen with Pantry\n    ➤ Upstairs living area\n    ➤ Downstairs living area\n\n\n    ◉ Amenities\n\n    ➤ Fully Tiled house\n    ➤ Ceiling Fans\n    ➤ Wall Cupboards\n    ➤ Water and Electricity\n    ➤ CCTV System\n    ➤ Parking Spaces\n    ➤ Small Front Garden Area\n    ➤ Clear Deed\n\n\n★  Close Areas -\t100m to Gampaha Road\n\t\t\t350m to Colombo–Kandy Road\n\t\t\t50m to Keppetipola Maha Vidyalaya\n\n\n★  Close to International Schools, Hospitals, Banks, Super Markets\n★  All infrastructure perfectly available including waste collection service.\n★  There is no legal or financial issues associated with the property.\n\n\n⇨  Feel free to call for an appointment or\n    for More information Contact\n    PEO Land Real Estate (Pvt) Ltd\n\n    GENUINE BUYERS ONLY\n\t \n     *NO BROKERS*\n  (බ්‍රෝකර්වරු ඇමතීමෙන් වලකින්න)\n\nSocial Media :\n\nFacebook | YouTube | WhatsApp| Instagram | Tiktok| peolands.com| Peo Land Real Estate (Pvt) Ltd",
+      "url": "http://ikman.lk/en/ad/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha",
+      "slug": "kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha",
+      "type": "for_sale",
+      "price": "Rs 55,000,000",
+      "price_raw": "Rs 55,000,000",
+      "price_numeric": 55,
+      "negotiable": true,
+      "location": "Gampaha City, Gampaha",
+      "city": "Gampaha City",
+      "district": "Gampaha",
+      "location_id": 1582,
+      "district_id": 1577,
+      "category": "Houses For Sale",
+      "category_slug": "houses-for-sale",
+      "category_id": 415,
+      "parent_category": "Property",
+      "parent_category_id": 409,
+      "posted_date": "08 Mar 8:02 pm",
+      "posted_at": "2026-03-08T20:02:58+05:30",
+      "expires_at": "2026-05-07T14:32:58.000Z",
+      "posted_timestamp": 1772980378000,
+      "views": 81,
+      "seller": {
+        "id": "66e03420e0e1c1001f1506fc",
+        "name": "Primetime Properties",
+        "is_member": true,
+        "is_verified": true,
+        "is_featured": false,
+        "membership_level": "premium",
+        "member_since": "September 2024",
+        "shop": {
+          "id": "66e3c4253416b90001312820",
+          "name": "Primetime Properties",
+          "slug": "primetime-properties-",
+          "logo": "https://i.ikman-st.com/u/primetime-properties-/5570b36e-b225-4ba6-a4ca-41f21890a77d/48/36/cropped.jpg",
+          "email": "peoholding4@gmail.com"
+        }
+      },
+      "contact": {
+        "phone_numbers": [
+          {
+            "number": "0775441504",
+            "verified": true
+          },
+          {
+            "number": "0772404160",
+            "verified": true
+          }
+        ],
+        "chat_enabled": true,
+        "email": "peoholding4@gmail.com"
+      },
+      "bedrooms": "5",
+      "bathrooms": "4",
+      "house_size": "2,000.0 sqft",
+      "land_size": "12.5 perches",
+      "address": "Gampaha",
+      "images": [
+        "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/c3edb16e-8516-4944-b9a8-8dcc1ba553ff",
+        "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/08e5d09b-7cf0-4eea-8c05-faa2392f185a",
+        "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/e5688953-3947-4c8e-b923-433d758a0074",
+        "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/36b49811-4948-430f-8fcc-db6eb799449d",
+        "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/0be9e5a0-4c6f-4a2e-8072-1c89e796cad9"
+      ],
+      "main_image": "https://i.ikman-st.com/kh740-luxury-two-storey-house-for-sale-in-gampaha-for-sale-gampaha/c3edb16e-8516-4944-b9a8-8dcc1ba553ff/142/107/cropped.jpg",
+      "image_count": 5,
+      "is_promoted": false,
+      "is_doorstep_delivery": false,
+      "is_safe_buy": false,
+      "similar_ads": [
+        {
+          "id": "69ad898219e09afe9b77d54b",
+          "title": "(KH744) Two storey house for sale in Gampaha Imbulgoda",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh744-two-storey-house-for-sale-in-gampaha-imbulgoda-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh744-two-storey-house-for-sale-in-gampaha-imbulgoda-for-sale-gampaha/14dd8a25-3218-4d48-aa70-0f63d057fed0/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "9 days"
+        },
+        {
+          "id": "69b8b4fc5a0ab5a403b83bc8",
+          "title": "(KH744) Two storey house for sale in Gampaha Imbulgoda",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh744-two-storey-house-for-sale-in-gampaha-imbulgoda-for-sale-gampaha-1",
+          "image": "https://i.ikman-st.com/kh744-two-storey-house-for-sale-in-gampaha-imbulgoda-for-sale-gampaha-1/1cba37a4-9811-4a6d-9cb3-e1ba4ef79c40/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69b50ef38a93199f4a9c650c",
+          "title": "(KH749) Luxury Two Storey House for sale in Minuwangoda",
+          "price": "Rs 38,500,000",
+          "price_numeric": 38,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh749-luxury-two-storey-house-for-sale-in-minuwangoda-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/kh749-luxury-two-storey-house-for-sale-in-minuwangoda-for-sale-gampaha-2/1bb70b93-633d-49ea-9fb1-bd9b5d0b8a0a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "3 days"
+        },
+        {
+          "id": "69b8bad9a0209184cd0553f6",
+          "title": "(KH749) Luxury Two Storey House for sale in Minuwangoda",
+          "price": "Rs 38,500,000",
+          "price_numeric": 38,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh749-luxury-two-storey-house-for-sale-in-minuwangoda-for-sale-gampaha-3",
+          "image": "https://i.ikman-st.com/kh749-luxury-two-storey-house-for-sale-in-minuwangoda-for-sale-gampaha-3/f0702345-6c15-447f-9092-4a93db36861c/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69ad8a91542a82eba6e4c66e",
+          "title": "(KH748) Two storey house for sale in Ragama",
+          "price": "Rs 16,500,000",
+          "price_numeric": 16,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh748-two-storey-house-for-sale-in-ragama-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh748-two-storey-house-for-sale-in-ragama-for-sale-gampaha/bac822a0-e565-4e62-a030-ffc95fedf609/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "9 days"
+        },
+        {
+          "id": "69b8b936a77de54dfc01bddf",
+          "title": "(KH700) Two Storey House for Sale in Ganemulla",
+          "price": "Rs 35,000,000",
+          "price_numeric": 35,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh700-two-storey-house-for-sale-in-ganemulla-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/kh700-two-storey-house-for-sale-in-ganemulla-for-sale-gampaha-2/c73ffdc1-82f4-4292-8a24-2249dad9b1ec/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69b6489498b981a11a7e95d4",
+          "title": "(KH700) Two Storey House for Sale in Ganemulla",
+          "price": "Rs 35,000,000",
+          "price_numeric": 35,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh700-two-storey-house-for-sale-in-ganemulla-for-sale-gampaha-1",
+          "image": "https://i.ikman-st.com/kh700-two-storey-house-for-sale-in-ganemulla-for-sale-gampaha-1/7b3ce1db-acfa-4fef-84c3-c2cc63ca20d8/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "2 days"
+        },
+        {
+          "id": "69b2540bb67842d0b721755f",
+          "title": "(K543) Two-Story Modern House for Sale in Gampaha",
+          "price": "Rs 23,000,000",
+          "price_numeric": 23,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k543-two-story-modern-house-for-sale-in-gampaha-for-sale-gampaha-9",
+          "image": "https://i.ikman-st.com/k543-two-story-modern-house-for-sale-in-gampaha-for-sale-gampaha-9/10ca9c83-2437-4e28-9f44-c217567de7cb/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "5 days"
+        },
+        {
+          "id": "69959db43de81ee9952dd759",
+          "title": "(KH704) Modern Single Storey House for Sale in Naranwala, Udupila",
+          "price": "Rs 39,500,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh704-modern-single-storey-house-for-sale-in-naranwala-udupila-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh704-modern-single-storey-house-for-sale-in-naranwala-udupila-for-sale-gampaha/963ff8ec-114b-4b18-89f7-c038e306c34c/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "27 days"
+        },
+        {
+          "id": "69b648149c944b7e6c1011d4",
+          "title": "(K551) Brand New Two Storiey House for Sale in Udugampola Gampaha",
+          "price": "Rs 57,500,000",
+          "price_numeric": 57,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k551-brand-new-two-storiey-house-for-sale-in-udugampola-gampaha-for-sale-gampaha-3",
+          "image": "https://i.ikman-st.com/k551-brand-new-two-storiey-house-for-sale-in-udugampola-gampaha-for-sale-gampaha-3/b94bef28-a01a-4aba-a5d9-1ae438da0e87/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "2 days"
+        }
+      ],
+      "request_index": 2,
+      "request_timestamp": "2026-03-17T07:59:40.411Z"
+    },
+    {
+      "id": "69b118c95424c82c131e5bcf",
+      "title": "(K674) Single Storey House for Sale in Ja Ela",
+      "description": "￭ Peaceful surrounding, Exclusive Neighborhood\n\n    🟩 Property Features\n\n    ⭕️ 04 bedrooms\n    ⭕️ 02 bathrooms\n    ⭕️ Living area \n    ⭕️ Dining area\n    ⭕️ Kitchen with Pantry\n\n\n    🟩 Amenities\n\n    ⭕️ Tiled Floors\n    ⭕️ Parking spaces (4 Vehicles)\n    ⭕️ Ceiling Fan\n    ⭕️ Ceiling\n    ⭕️ Water & Electricity\n    ⭕️ Garden Space\n    ⭕️ Clear Deed\n    ⭕️ Verandah\n\n Viewings can be arranged by prior appointment only\n\n♻️  Close Areas -  \t1.5Km away to Negombo-Colombo main road\n\n♻️  Close to International Schools, Hospitals, Banks, Super Markets\n♻️  All infrastructure perfectly available including waste collection service.\n♻️  There is no legal or financial issues associated with the property.\n\n\n    🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹\n\n\n📞  Feel free to call for an appointment or for More information Contact\n    PEO Land Real Estate (Pvt) Ltd\n\n    \tGENUINE BUYERS ONLY\n\t*NO BROKERS*\n  \t(බ්‍රෝකර්වරු ඇමතීමෙන් වලකින්න)\n\nSocial Media :\nFacebook | YouTube | WhatsApp| Instagram | Tiktok| peolands.com| Peo Land Real Estate (Pvt) Ltd",
+      "url": "http://ikman.lk/en/ad/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3",
+      "slug": "k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3",
+      "type": "for_sale",
+      "price": "Rs 23,000,000",
+      "price_raw": "Rs 23,000,000",
+      "price_numeric": 23,
+      "negotiable": true,
+      "location": "Ja-Ela, Gampaha",
+      "city": "Ja-Ela",
+      "district": "Gampaha",
+      "location_id": 1583,
+      "district_id": 1577,
+      "category": "Houses For Sale",
+      "category_slug": "houses-for-sale",
+      "category_id": 415,
+      "parent_category": "Property",
+      "parent_category_id": 409,
+      "posted_date": "11 Mar 1:05 pm",
+      "posted_at": "2026-03-11T13:05:11+05:30",
+      "expires_at": "2026-05-10T07:35:11.000Z",
+      "posted_timestamp": 1773214511000,
+      "views": 100,
+      "seller": {
+        "id": "66e03420e0e1c1001f1506fc",
+        "name": "Primetime Properties",
+        "is_member": true,
+        "is_verified": true,
+        "is_featured": false,
+        "membership_level": "premium",
+        "member_since": "September 2024",
+        "shop": {
+          "id": "66e3c4253416b90001312820",
+          "name": "Primetime Properties",
+          "slug": "primetime-properties-",
+          "logo": "https://i.ikman-st.com/u/primetime-properties-/5570b36e-b225-4ba6-a4ca-41f21890a77d/48/36/cropped.jpg",
+          "email": "peoholding4@gmail.com"
+        }
+      },
+      "contact": {
+        "phone_numbers": [
+          {
+            "number": "0775441504",
+            "verified": true
+          },
+          {
+            "number": "0772404160",
+            "verified": true
+          }
+        ],
+        "chat_enabled": true,
+        "email": "peoholding4@gmail.com"
+      },
+      "bedrooms": "4",
+      "bathrooms": "2",
+      "house_size": "2,265.0 sqft",
+      "land_size": "22.0 perches",
+      "address": "Ja Ela ",
+      "images": [
+        "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/b86b0bd3-ebfb-436a-935a-926e4266470a",
+        "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/ab9ecd93-0268-43a9-9fba-5909bded6168",
+        "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/62a5daa7-c400-4371-9dc2-cc036b43ce55",
+        "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/a08eb243-ff86-49a4-a595-e2f5fde69eff",
+        "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/dee7e8f4-3a0b-45ff-b782-5a05eb6a128d"
+      ],
+      "main_image": "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/b86b0bd3-ebfb-436a-935a-926e4266470a/142/107/cropped.jpg",
+      "image_count": 5,
+      "is_promoted": false,
+      "is_doorstep_delivery": false,
+      "is_safe_buy": false,
+      "similar_ads": [
+        {
+          "id": "69ae52a2f02ca672ab7bf780",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/d7b23cd6-e100-44b4-a4be-60d86bcddcc1/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "8 days"
+        },
+        {
+          "id": "69b50af0e8f05389536b265e",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57/3b26c251-b18e-414d-9c21-a743f30c2416/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "3 days"
+        },
+        {
+          "id": "699fb0fb8e69cc130d5e08a3",
+          "title": "(B256) Single Storey House for Sale in Ja Ela, Kotugoda",
+          "price": "Rs 13,500,000",
+          "price_numeric": 13,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4",
+          "image": "https://i.ikman-st.com/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4/72af3341-c0f1-4f3d-9a0d-d3274bab9bd9/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "19 days"
+        },
+        {
+          "id": "69b8b72f2e2f8f75af3d2261",
+          "title": "(K568) Two Storey House for Sale in Ja Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2/13124bf0-8381-46eb-ace7-cf6f92509e63/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69b647ae9108c99120a1146b",
+          "title": "(K671) Single Storey House for Sale in Delgoda",
+          "price": "Rs 19,500,000",
+          "price_numeric": 19,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k671-single-storey-house-for-sale-in-delgoda-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/k671-single-storey-house-for-sale-in-delgoda-for-sale-gampaha-2/2fcec72e-10b1-4759-8ddc-d752e3d31765/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "2 days"
+        },
+        {
+          "id": "69b2525e82b8170ef5e543c3",
+          "title": "(K424) Luxury 2 Story House sale in Bopitya Ja Ela",
+          "price": "Rs 52,500,000",
+          "price_numeric": 52,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31",
+          "image": "https://i.ikman-st.com/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31/3f06b041-f7e8-44ab-b4bd-63c2ba70dcab/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "5 days"
+        },
+        {
+          "id": "6995ba5ffb2c37d4e59da2e0",
+          "title": "(KH708) House for Sale in Niwasipura Ja Ela",
+          "price": "Rs 22,500,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh708-house-for-sale-in-niwasipura-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh708-house-for-sale-in-niwasipura-ja-ela-for-sale-gampaha/c8723f44-3570-48ef-9905-0438f1968f34/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "27 days"
+        },
+        {
+          "id": "699c34eb200f2b89277cbc55",
+          "title": "(KH721) Furnished Two Storey House for Sale in Lake City – Ja-Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/9126b069-4017-4014-b27f-aeaec6cabbc7/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "22 days"
+        },
+        {
+          "id": "69afa0fe71524d66908e24a4",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131/6c62851d-a26a-45a8-bfb9-2a2efa98019b/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "7 days"
+        },
+        {
+          "id": "69b39627321fe489c4e665f1",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132/b092cf99-28e8-40a9-a4ff-98e2b91809f8/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "4 days"
+        }
+      ],
+      "request_index": 3,
+      "request_timestamp": "2026-03-17T07:59:41.197Z"
+    },
+    {
+      "id": "69ae52a2f02ca672ab7bf780",
+      "title": "(B113) Single Storey House For Sale in Ja Ela",
+      "description": " Peaceful surrounding, Exclusive Neighborhood\n\n    🟩 Property Features\n\n    ⭕️ 02 Bedrooms    \n    ⭕️ 01 Bathrooms\n    ⭕️ Living area \n    ⭕️ Separate Dinning area\n    ⭕️ Kitchen area\n\n\n    🟩 Amenities\n \n    ⭕️ Fully Tiled House\n    ⭕️ Vehicle Parking space \n    ⭕️ Air Conditioned\n    ⭕️ Wicket Gate \n    ⭕️ Ceiling Roof\n    ⭕️ Water & Electricity Facility \n      \n         \n♻️  Close area\t- Ja Ela Town 3.0km\n\t\t- Ja Ela Railway Station 4.5km\t\n\t\t- 266/1 bus road 100m \n\n\n♻️  Close to Supermarkets, Banks, Government & International schools.\n\n♻️  All infrastructure perfectly available including waste collection service.\n\n♻️  There is no legal or financial issues associated with the property.\n    🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹\n\n📞  Feel free to call for an apoinment or\n    for More information Contact\n    Peo Land Real Estate (Pvt) Ltd\n\n    GENUINE BUYERS ONLY\n\t \n     *NO BROKERS*\n  (බ්‍රෝකර්වරු ඇමතීමෙන් වලකින්න)\n\nSocial Media :\n\nFacebook | YouTube | WhatsApp| Instagram | Tiktok| peolands.com| PEO Land Real Estate (Pvt) Ltd",
+      "url": "http://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56",
+      "slug": "b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56",
+      "type": "for_sale",
+      "price": "Rs 15,000,000",
+      "price_raw": "Rs 15,000,000",
+      "price_numeric": 15,
+      "negotiable": true,
+      "location": "Ja-Ela, Gampaha",
+      "city": "Ja-Ela",
+      "district": "Gampaha",
+      "location_id": 1583,
+      "district_id": 1577,
+      "category": "Houses For Sale",
+      "category_slug": "houses-for-sale",
+      "category_id": 415,
+      "parent_category": "Property",
+      "parent_category_id": 409,
+      "posted_date": "09 Mar 10:29 am",
+      "posted_at": "2026-03-09T10:29:00+05:30",
+      "expires_at": "2026-05-08T04:59:00.000Z",
+      "posted_timestamp": 1773032340000,
+      "views": 304,
+      "seller": {
+        "id": "66e03420e0e1c1001f1506fc",
+        "name": "Primetime Properties",
+        "is_member": true,
+        "is_verified": true,
+        "is_featured": false,
+        "membership_level": "premium",
+        "member_since": "September 2024",
+        "shop": {
+          "id": "66e3c4253416b90001312820",
+          "name": "Primetime Properties",
+          "slug": "primetime-properties-",
+          "logo": "https://i.ikman-st.com/u/primetime-properties-/5570b36e-b225-4ba6-a4ca-41f21890a77d/48/36/cropped.jpg",
+          "email": "peoholding4@gmail.com"
+        }
+      },
+      "contact": {
+        "phone_numbers": [
+          {
+            "number": "0775441504",
+            "verified": true
+          },
+          {
+            "number": "0772404160",
+            "verified": true
+          }
+        ],
+        "chat_enabled": true,
+        "email": "peoholding4@gmail.com"
+      },
+      "bedrooms": "2",
+      "bathrooms": "1",
+      "house_size": "1,500.0 sqft",
+      "land_size": "24.5 perches",
+      "address": "Niwandama, Ja Ela",
+      "images": [
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/d7b23cd6-e100-44b4-a4be-60d86bcddcc1",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/a23781e4-e107-4f7c-99b6-f7ad25adc257",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/2328ddb9-5b9d-4e58-b96e-c3bdea646983",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/64373eca-1ec3-40e8-bd8b-5413d665cfe2",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/f6a2eaa2-963c-4d52-b410-c6f2fce155fa",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/42ea540b-4132-45c9-a614-c103f1214a96",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/95fe7875-9ffa-4fa6-8877-a1d5dbd70935",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/27610511-8ed6-4280-b1df-f049b428bb38",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/03279f7d-295f-48ce-bf13-5f6d76ea1915",
+        "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/14e0d695-2dca-4068-a89b-13b9565330a5"
+      ],
+      "main_image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-56/d7b23cd6-e100-44b4-a4be-60d86bcddcc1/142/107/cropped.jpg",
+      "image_count": 10,
+      "is_promoted": false,
+      "is_doorstep_delivery": false,
+      "is_safe_buy": false,
+      "similar_ads": [
+        {
+          "id": "69b50af0e8f05389536b265e",
+          "title": "(B113) Single Storey House For Sale in Ja Ela",
+          "price": "Rs 15,000,000",
+          "price_numeric": 15,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57",
+          "image": "https://i.ikman-st.com/b113-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-57/3b26c251-b18e-414d-9c21-a743f30c2416/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "3 days"
+        },
+        {
+          "id": "69b118c95424c82c131e5bcf",
+          "title": "(K674) Single Storey House for Sale in Ja Ela",
+          "price": "Rs 23,000,000",
+          "price_numeric": 23,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3",
+          "image": "https://i.ikman-st.com/k674-single-storey-house-for-sale-in-ja-ela-for-sale-gampaha-3/b86b0bd3-ebfb-436a-935a-926e4266470a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 days"
+        },
+        {
+          "id": "699fb0fb8e69cc130d5e08a3",
+          "title": "(B256) Single Storey House for Sale in Ja Ela, Kotugoda",
+          "price": "Rs 13,500,000",
+          "price_numeric": 13,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4",
+          "image": "https://i.ikman-st.com/b256-single-storey-house-for-sale-in-ja-ela-kotugoda-for-sale-gampaha-4/72af3341-c0f1-4f3d-9a0d-d3274bab9bd9/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "19 days"
+        },
+        {
+          "id": "69b8b72f2e2f8f75af3d2261",
+          "title": "(K568) Two Storey House for Sale in Ja Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2",
+          "image": "https://i.ikman-st.com/k568-two-storey-house-for-sale-in-ja-ela-for-sale-gampaha-2/13124bf0-8381-46eb-ace7-cf6f92509e63/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "6 hours"
+        },
+        {
+          "id": "69b2525e82b8170ef5e543c3",
+          "title": "(K424) Luxury 2 Story House sale in Bopitya Ja Ela",
+          "price": "Rs 52,500,000",
+          "price_numeric": 52,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31",
+          "image": "https://i.ikman-st.com/k424-luxury-2-story-house-sale-in-bopitya-ja-ela-for-sale-gampaha-31/3f06b041-f7e8-44ab-b4bd-63c2ba70dcab/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "5 days"
+        },
+        {
+          "id": "6995ba5ffb2c37d4e59da2e0",
+          "title": "(KH708) House for Sale in Niwasipura Ja Ela",
+          "price": "Rs 22,500,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh708-house-for-sale-in-niwasipura-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh708-house-for-sale-in-niwasipura-ja-ela-for-sale-gampaha/c8723f44-3570-48ef-9905-0438f1968f34/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "27 days"
+        },
+        {
+          "id": "699c34eb200f2b89277cbc55",
+          "title": "(KH721) Furnished Two Storey House for Sale in Lake City – Ja-Ela",
+          "price": "Rs 39,000,000",
+          "price_numeric": 39,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh721-furnished-two-storey-house-for-sale-in-lake-city-ja-ela-for-sale-gampaha/9126b069-4017-4014-b27f-aeaec6cabbc7/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "22 days"
+        },
+        {
+          "id": "69afa0fe71524d66908e24a4",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-131/6c62851d-a26a-45a8-bfb9-2a2efa98019b/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "7 days"
+        },
+        {
+          "id": "69b39627321fe489c4e665f1",
+          "title": "(K221) Newly Renovated Two Storey House For Rent in Ja Ela",
+          "price": "Rs 135,000 /month",
+          "price_numeric": 135,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132",
+          "image": "https://i.ikman-st.com/k221-newly-renovated-two-storey-house-for-rent-in-ja-ela-for-rent-gampaha-132/b092cf99-28e8-40a9-a4ff-98e2b91809f8/142/107/cropped.jpg",
+          "category": "House Rentals",
+          "posted_time": "4 days"
+        },
+        {
+          "id": "699c34abe0309057d8bcc2c6",
+          "title": "(KH720) Furnished Two Storey Luxury House for Sale in Ja-Ela Lake City",
+          "price": "Rs 22,000,000",
+          "price_numeric": 22,
+          "location": "Gampaha",
+          "url": "https://ikman.lk/en/ad/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha",
+          "image": "https://i.ikman-st.com/kh720-furnished-two-storey-luxury-house-for-sale-in-ja-ela-lake-city-for-sale-gampaha/207f89ca-eca2-4212-8002-ebe0ad99993a/142/107/cropped.jpg",
+          "category": "Houses For Sale",
+          "posted_time": "22 days"
+        }
+      ],
+      "request_index": 4,
+      "request_timestamp": "2026-03-17T07:59:41.481Z"
+    }
+  ]
+}
