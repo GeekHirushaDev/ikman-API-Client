@@ -6,6 +6,7 @@ const { JSDOM } = require('jsdom');
 const {
   logger,
   formatPrice,
+  sortAds,
   delay,
   createProgressBar,
   displayStats,
@@ -268,8 +269,12 @@ async function searchListings(keyword, options = {}) {
     progressBar.stop();
   }
 
+  const sortedAds = ['price-asc', 'price-desc'].includes(config.sortBy)
+    ? sortAds(allAds, config.sortBy)
+    : allAds;
+
   const stats = {
-    ...generateStats(allAds),
+    ...generateStats(sortedAds),
     pages_processed: pagesProcessed,
     total_count: searchSummary?.total_count,
     accessible_count: searchSummary?.accessible_count,
@@ -284,10 +289,10 @@ async function searchListings(keyword, options = {}) {
   }
 
   if (config.saveToFile) {
-    exportToJSON(allAds, config.fileName);
+    exportToJSON(sortedAds, config.fileName);
   }
 
-  return allAds;
+  return sortedAds;
 }
 
 module.exports = {
