@@ -193,18 +193,19 @@ describe('Cache Features', () => {
     expect(info.dir).toBe(cache.cacheDir);
   });
 
-  test('Cache: TTL expiration (immediate)', () => {
+  test('Cache: TTL expiration (immediate)', async () => {
     const cache = new Cache({ cacheDir, cache: true, cacheTTL: 1 });
     cache.set('pixel', mockAds, { sortBy: 'price-asc' });
 
     const dataBeforeExpiry = cache.get('pixel', { sortBy: 'price-asc' });
     expect(dataBeforeExpiry).toEqual(mockAds);
 
-    // Wait for TTL to expire
-    setTimeout(() => {
-      const dataAfterExpiry = cache.get('pixel', { sortBy: 'price-asc' });
-      expect(dataAfterExpiry).toBeNull();
-    }, 1100);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1100);
+    });
+
+    const dataAfterExpiry = cache.get('pixel', { sortBy: 'price-asc' });
+    expect(dataAfterExpiry).toBeNull();
   });
 });
 

@@ -1,12 +1,9 @@
 {
   "name": "ikman-api-client",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Complete API client for ikman.lk - search listings, read individual ads, batch processing, filtering, and caching",
   "main": "src/index.js",
   "types": "src/types.d.ts",
-  "bin": {
-    "ikman": "bin/ikman"
-  },
   "bin": {
     "ikman": "bin/ikman"
   },
@@ -21,6 +18,10 @@
     "example:batch": "node examples/batch.js",
     "example:advanced": "node examples/advanced.js",
     "example:images": "node examples/images.js",
+    "benchmark:cold": "node benchmarks/cold-cache.js",
+    "benchmark:warm": "node benchmarks/warm-cache.js",
+    "benchmark:stream": "node benchmarks/search-vs-pages.js",
+    "benchmark": "npm run benchmark:cold && npm run benchmark:warm && npm run benchmark:stream",
     "try:all": "npm run check && npm run example && npm run example:ad && npm run example:batch && npm run example:advanced",
     "prepublishOnly": "npm test && npm run lint"
   },
@@ -57,6 +58,7 @@
     "joi": "^17.9.2",
     "yargs": "^17.7.2",
     "jsdom": "^22.1.0",
+    "parquetjs-lite": "^0.8.7",
     "ora": "^5.4.1",
     "p-queue": "^7.3.4",
     "p-retry": "^5.1.2",

@@ -8,6 +8,10 @@ const {
   formatPrice,
   sortAds,
   filterAds,
+  canonicalizeAd,
+  dedupeAds,
+  applyAdPlugins,
+  runResultPlugins,
   delay,
   createProgressBar,
   displayStats,
@@ -25,6 +29,43 @@ const {
 } = require('./constants');
 const { validateSearch } = require('./validators');
 const Cache = require('./cache');
+
+function mapRawAd(ad) {
+  return canonicalizeAd({
+    id: ad.id || null,
+    title: ad.title || 'No title',
+    price: formatPrice(ad.price),
+    price_raw: ad.price,
+    price_numeric: parseFloat(ad.price?.toString().replace(/[^0-9.]/g, '') || '0'),
+    location: ad.location || 'Unknown',
+    area: ad.area || null,
+    district: ad.district || null,
+    link: ad.slug ? `https://ikman.lk/en/ad/${ad.slug}` : null,
+    postedTime: ad.timeStamp || null,
+    postedDate: ad.createdDate || null,
+    category: ad.category || null,
+    category_id: ad.categoryId || null,
+    seller_type: ad.sellerType || null,
+    ad_type: ad.type || null,
+    is_urgent: ad.isUrgent || false,
+    is_featured: ad.isFeatured || false,
+    has_images: Boolean(ad.images?.length)
+  });
+}
+
+function applySearchFilters(ads, config) {
+  if (config.minPrice !== undefined || config.maxPrice !== undefined
+      || config.location || config.category) {
+    const filterObj = {};
+    if (config.minPrice !== undefined) filterObj.minPrice = config.minPrice;
+    if (config.maxPrice !== undefined) filterObj.maxPrice = config.maxPrice;
+    if (config.location) filterObj.location = config.location;
+    if (config.category) filterObj.category = config.category;
+    return filterAds(ads, filterObj);
+  }
+
+  return ads;
+}
 
 function extractSearchSummaryFromHTML(html) {
   const dom = new JSDOM(html, { runScripts: 'dangerously' });
@@ -163,7 +204,9 @@ async function searchListings(keyword, options = {}) {
     ...validatedOptions,
     respectAccessLimit: validatedOptions.respectAccessLimit !== false,
     sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy,
-    retries: validatedOptions.retries ?? DEFAULTS.SEARCH.retries
+    retries: validatedOptions.retries ?? DEFAULTS.SEARCH.retries,
+    dedupe: validatedOptions.dedupe !== false,
+    plugins: validatedOptions.plugins || []
   };
 
   // Initialize cache
@@ -248,26 +291,7 @@ async function searchListings(keyword, options = {}) {
         break;
       }
 
-      const pageAds = pageData.map((ad) => ({
-        id: ad.id || null,
-        title: ad.title || 'No title',
-        price: formatPrice(ad.price),
-        price_raw: ad.price,
-        price_numeric: parseFloat(ad.price?.toString().replace(/[^0-9.]/g, '') || '0'),
-        location: ad.location || 'Unknown',
-        area: ad.area || null,
-        district: ad.district || null,
-        link: ad.slug ? `https://ikman.lk/en/ad/${ad.slug}` : null,
-        postedTime: ad.timeStamp || null,
-        postedDate: ad.createdDate || null,
-        category: ad.category || null,
-        category_id: ad.categoryId || null,
-        seller_type: ad.sellerType || null,
-        ad_type: ad.type || null,
-        is_urgent: ad.isUrgent || false,
-        is_featured: ad.isFeatured || false,
-        has_images: Boolean(ad.images?.length)
-      }));
+      const pageAds = pageData.map(mapRawAd);
 
       allAds.push(...pageAds);
       pagesProcessed = i;
@@ -294,27 +318,33 @@ async function searchListings(keyword, options = {}) {
     progressBar.stop();
   }
 
-  // Apply sorting (client-side fallback for price sorts)
+  const baseAds = config.dedupe ? dedupeAds(allAds) : allAds;
+
+  if (config.verbose && config.dedupe && baseAds.length !== allAds.length) {
+    logger.info(`🧹 Removed ${allAds.length - baseAds.length} duplicate ads`);
+  }
+
   const sortedAds = ['price-asc', 'price-desc'].includes(config.sortBy)
-    ? sortAds(allAds, config.sortBy)
-    : allAds;
+    ? sortAds(baseAds, config.sortBy)
+    : baseAds;
 
-  // Apply filters (minPrice, maxPrice, location, category)
-  let filteredAds = sortedAds;
-  if (config.minPrice !== undefined || config.maxPrice !== undefined
-      || config.location || config.category) {
-    const filterObj = {};
-    if (config.minPrice !== undefined) filterObj.minPrice = config.minPrice;
-    if (config.maxPrice !== undefined) filterObj.maxPrice = config.maxPrice;
-    if (config.location) filterObj.location = config.location;
-    if (config.category) filterObj.category = config.category;
+  const pluginContext = {
+    keyword: validatedKeyword,
+    options: config,
+    mode: 'search'
+  };
 
-    filteredAds = filterAds(sortedAds, filterObj);
+  const adsAfterAdPlugins = applyAdPlugins(sortedAds, config.plugins, pluginContext);
+  const adsAfterFilters = applySearchFilters(adsAfterAdPlugins, config);
+  const filteredAds = runResultPlugins(adsAfterFilters, config.plugins, pluginContext);
 
-    if (config.verbose) {
-      const originalCount = sortedAds.length;
-      logger.info(`🔍 Filters applied: ${originalCount} → ${filteredAds.length} results`);
-    }
+  if (config.verbose && adsAfterAdPlugins.length !== filteredAds.length) {
+    logger.info(`🔌 Plugins transformed results: ${adsAfterAdPlugins.length} → ${filteredAds.length}`);
+  }
+
+  if (config.verbose && (config.minPrice !== undefined || config.maxPrice !== undefined
+      || config.location || config.category)) {
+    logger.info(`🔍 Filters applied: ${adsAfterAdPlugins.length} → ${adsAfterFilters.length} results`);
   }
 
   const stats = {
@@ -329,7 +359,8 @@ async function searchListings(keyword, options = {}) {
       minPrice: config.minPrice,
       maxPrice: config.maxPrice,
       location: config.location,
-      category: config.category
+      category: config.category,
+      dedupe: config.dedupe
     }
   };
 
@@ -348,7 +379,8 @@ async function searchListings(keyword, options = {}) {
     minPrice: config.minPrice,
     maxPrice: config.maxPrice,
     location: config.location,
-    category: config.category
+    category: config.category,
+    dedupe: config.dedupe
   });
 
   return filteredAds;
@@ -373,7 +405,9 @@ async function* searchPages(keyword, options = {}) {
     ...validatedOptions,
     respectAccessLimit: validatedOptions.respectAccessLimit !== false,
     sortBy: validatedOptions.sortBy || DEFAULTS.SEARCH.sortBy,
-    retries: validatedOptions.retries ?? DEFAULTS.SEARCH.retries
+    retries: validatedOptions.retries ?? DEFAULTS.SEARCH.retries,
+    dedupe: validatedOptions.dedupe !== false,
+    plugins: validatedOptions.plugins || []
   };
 
   if (!SORT_OPTIONS[config.sortBy.toUpperCase().replace('-', '_')]) {
@@ -426,44 +460,25 @@ async function* searchPages(keyword, options = {}) {
         break;
       }
 
-      const pageAds = pageData.map((ad) => ({
-        id: ad.id || null,
-        title: ad.title || 'No title',
-        price: formatPrice(ad.price),
-        price_raw: ad.price,
-        price_numeric: parseFloat(ad.price?.toString().replace(/[^0-9.]/g, '') || '0'),
-        location: ad.location || 'Unknown',
-        area: ad.area || null,
-        district: ad.district || null,
-        link: ad.slug ? `https://ikman.lk/en/ad/${ad.slug}` : null,
-        postedTime: ad.timeStamp || null,
-        postedDate: ad.createdDate || null,
-        category: ad.category || null,
-        category_id: ad.categoryId || null,
-        seller_type: ad.sellerType || null,
-        ad_type: ad.type || null,
-        is_urgent: ad.isUrgent || false,
-        is_featured: ad.isFeatured || false,
-        has_images: Boolean(ad.images?.length)
-      }));
+      const pageAds = pageData.map(mapRawAd);
 
       pagesProcessed = i;
 
-      // Apply sorting and filtering to page results
-      let pageResults = ['price-asc', 'price-desc'].includes(config.sortBy)
-        ? sortAds(pageAds, config.sortBy)
-        : pageAds;
+      const dedupedPageAds = config.dedupe ? dedupeAds(pageAds) : pageAds;
+      const sortedPageAds = ['price-asc', 'price-desc'].includes(config.sortBy)
+        ? sortAds(dedupedPageAds, config.sortBy)
+        : dedupedPageAds;
 
-      if (config.minPrice !== undefined || config.maxPrice !== undefined
-          || config.location || config.category) {
-        const filterObj = {};
-        if (config.minPrice !== undefined) filterObj.minPrice = config.minPrice;
-        if (config.maxPrice !== undefined) filterObj.maxPrice = config.maxPrice;
-        if (config.location) filterObj.location = config.location;
-        if (config.category) filterObj.category = config.category;
+      const pluginContext = {
+        keyword: validatedKeyword,
+        options: config,
+        mode: 'searchPages',
+        page: i
+      };
 
-        pageResults = filterAds(pageResults, filterObj);
-      }
+      const adsAfterAdPlugins = applyAdPlugins(sortedPageAds, config.plugins, pluginContext);
+      const adsAfterFilters = applySearchFilters(adsAfterAdPlugins, config);
+      const pageResults = runResultPlugins(adsAfterFilters, config.plugins, pluginContext);
 
       if (config.verbose) {
         logger.success(`✓ Page ${i}: yielded ${pageResults.length} results`);

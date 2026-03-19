@@ -1,9 +1,11 @@
 declare module 'ikman-api-client' {
+  export type SortBy = 'price-asc' | 'price-desc' | 'date-asc' | 'date-desc' | 'relevance';
+
   export interface SearchAd {
     id: string | null;
     title: string;
     price: string | null;
-    price_raw: any;
+    price_raw: unknown;
     price_numeric: number;
     location: string;
     area: string | null;
@@ -18,6 +20,11 @@ declare module 'ikman-api-client' {
     is_urgent: boolean;
     is_featured: boolean;
     has_images: boolean;
+    canonical_title?: string | null;
+    canonical_location?: string | null;
+    canonical_price?: number | null;
+    canonical_key?: string;
+    [key: string]: unknown;
   }
 
   export interface DetailedAd {
@@ -27,31 +34,25 @@ declare module 'ikman-api-client' {
     url: string;
     slug: string;
     type: string;
-
     price: string | null;
     price_raw: string | null;
     price_numeric: number | null;
     negotiable: boolean;
-
     location: string;
     city: string | null;
     district: string | null;
     location_id: number | null;
     district_id: number | null;
-
     category: string | null;
     category_slug: string | null;
     category_id: number | null;
     parent_category: string | null;
     parent_category_id: number | null;
-
     posted_date: string | null;
     posted_at: string | null;
     expires_at: string | null;
     posted_timestamp: number | null;
-
     views: number;
-
     seller: {
       id: string | null;
       name: string | null;
@@ -68,7 +69,6 @@ declare module 'ikman-api-client' {
         email?: string;
       } | null;
     };
-
     contact: {
       phone_numbers: Array<{
         number: string;
@@ -77,17 +77,12 @@ declare module 'ikman-api-client' {
       chat_enabled: boolean;
       email?: string;
     };
-
-    [key: string]: any;
-
     images: string[];
     main_image: string | null;
     image_count: number;
-
     is_promoted: boolean;
     is_doorstep_delivery: boolean;
     is_safe_buy: boolean;
-
     similar_ads: Array<{
       id: string;
       title: string;
@@ -99,26 +94,21 @@ declare module 'ikman-api-client' {
       category?: string;
       posted_time?: string;
     }>;
-
-    _raw?: any;
+    _raw?: unknown;
+    [key: string]: unknown;
   }
 
-  export interface BatchResult {
-    results: DetailedAd[];
-    errors: Array<{
-      url: string;
-      index: number;
-      error: string;
-      timestamp: string;
-    }>;
-    stats: {
-      total: number;
-      successful: number;
-      failed: number;
-      success_rate: string;
-      time_taken: string;
-      errors_by_type: Record<string, number>;
-    };
+  export interface SearchPluginContext {
+    keyword: string;
+    options: SearchOptions;
+    mode: 'search' | 'searchPages';
+    page?: number;
+  }
+
+  export interface SearchPlugin {
+    name?: string;
+    transformAd?: (ad: SearchAd, context: SearchPluginContext) => SearchAd | void;
+    transformResults?: (ads: SearchAd[], context: SearchPluginContext) => SearchAd[] | void;
   }
 
   export interface SearchOptions {
@@ -126,7 +116,17 @@ declare module 'ikman-api-client' {
     respectAccessLimit?: boolean;
     headless?: boolean;
     timeout?: number;
-    sortBy?: 'price-asc' | 'price-desc' | 'date-asc' | 'date-desc' | 'relevance';
+    retries?: number;
+    sortBy?: SortBy;
+    minPrice?: number;
+    maxPrice?: number;
+    location?: string;
+    category?: string;
+    dedupe?: boolean;
+    plugins?: SearchPlugin[];
+    cache?: boolean;
+    cacheDir?: string;
+    cacheTTL?: number;
     saveToFile?: boolean;
     fileName?: string;
     verbose?: boolean;
@@ -152,21 +152,56 @@ declare module 'ikman-api-client' {
     verbose?: boolean;
   }
 
-  export function search(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
-  export function searchListings(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
-  export function getSearchSummary(
-    keyword: string,
-    options?: SearchOptions
-  ): Promise<{
+  export interface BatchResult {
+    results: DetailedAd[];
+    errors: Array<{
+      url: string;
+      index: number;
+      error: string;
+      timestamp: string;
+    }>;
+    stats: {
+      total: number;
+      successful: number;
+      failed: number;
+      success_rate: string;
+      time_taken: string;
+      errors_by_type: Record<string, number>;
+    };
+  }
+
+  export interface SearchSummary {
     keyword: string;
-    sort_by: 'price-asc' | 'price-desc' | 'date-asc' | 'date-desc' | 'relevance';
+    sort_by: SortBy;
     total_count: number;
     accessible_count: number;
     is_capped: boolean;
     access_limit: number;
     page_size: number;
     max_accessible_pages: number;
-  }>;
+  }
+
+  export class Cache {
+    constructor(options?: { cache?: boolean; cacheDir?: string; cacheTTL?: number });
+    cacheDir: string;
+    enabled: boolean;
+    ttl: number;
+    generateKey(keyword: string, options?: Partial<SearchOptions>): string;
+    get(keyword: string, options?: Partial<SearchOptions>): SearchAd[] | null;
+    set(keyword: string, data: SearchAd[], options?: Partial<SearchOptions>): void;
+    clear(): void;
+    info(): { size: number; files: number; dir: string; sizeGB?: string; error?: string };
+  }
+
+  export const plugins: {
+    normalizeLocationPlugin(): SearchPlugin;
+    scoreByPricePlugin(options?: { min?: number; max?: number }): SearchPlugin;
+  };
+
+  export function search(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
+  export function searchListings(keyword: string, options?: SearchOptions): Promise<SearchAd[]>;
+  export function searchPages(keyword: string, options?: SearchOptions): AsyncGenerator<SearchAd[], void, unknown>;
+  export function getSearchSummary(keyword: string, options?: SearchOptions): Promise<SearchSummary>;
 
   export function getAd(url: string, options?: AdPageOptions): Promise<DetailedAd>;
   export function getAdDetails(url: string, options?: AdPageOptions): Promise<DetailedAd>;
@@ -191,14 +226,21 @@ declare module 'ikman-api-client' {
   }>;
 
   export const utils: {
-    sortAds(ads: SearchAd[] | DetailedAd[], sortBy?: string): SearchAd[] | DetailedAd[];
-    filterAds(ads: SearchAd[] | DetailedAd[], filters: Partial<SearchAd | DetailedAd>): SearchAd[] | DetailedAd[];
+    normalizeText(value: unknown): string;
+    canonicalizeAd(ad: Partial<SearchAd>): SearchAd;
+    dedupeAds(ads: SearchAd[]): SearchAd[];
+    applyAdPlugins(ads: SearchAd[], plugins?: SearchPlugin[], context?: SearchPluginContext): SearchAd[];
+    runResultPlugins(ads: SearchAd[], plugins?: SearchPlugin[], context?: SearchPluginContext): SearchAd[];
+    sortAds<T extends SearchAd | DetailedAd>(ads: T[], sortBy?: SortBy): T[];
+    filterAds<T extends SearchAd | DetailedAd>(ads: T[], filters: Record<string, unknown>): T[];
     exportToCSV(ads: SearchAd[] | DetailedAd[], filename?: string): Promise<void>;
-    exportToJSON(ads: SearchAd[] | DetailedAd[], filename?: string): void;
-    generateStats(ads: SearchAd[] | DetailedAd[]): Record<string, any>;
+    exportToJSONL(ads: SearchAd[] | DetailedAd[], filename?: string): Promise<void>;
+    exportToParquet(ads: SearchAd[] | DetailedAd[], filename?: string): Promise<void>;
+    exportToJSON(ads: SearchAd[] | DetailedAd[] | Record<string, unknown>, filename?: string): void;
+    generateStats(ads: SearchAd[] | DetailedAd[]): Record<string, unknown>;
     displayTable(ads: SearchAd[] | DetailedAd[], columns?: string[]): void;
-    formatPrice(price: any): string | null;
-    parsePrice(price: string | number): number;
+    formatPrice(price: unknown): string | null;
+    parsePrice(price: string | number | null | undefined): number;
   };
 
   export const constants: {
@@ -210,7 +252,7 @@ declare module 'ikman-api-client' {
       RELEVANCE: 'relevance';
     };
     DEFAULTS: {
-      SEARCH: SearchOptions;
+      SEARCH: Required<SearchOptions>;
       AD_PAGE: Required<AdPageOptions>;
       BATCH: Required<BatchOptions>;
     };

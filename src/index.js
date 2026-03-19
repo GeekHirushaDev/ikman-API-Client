@@ -6,6 +6,7 @@ const { searchListings, getSearchSummary, searchPages } = require('./searchClien
 const { getAdDetails } = require('./adClient');
 const { processAdsBatch, getImagesFromUrls } = require('./batchClient');
 const Cache = require('./cache');
+const plugins = require('./plugins');
 const utils = require('./utils');
 const constants = require('./constants');
 const { version } = require('../package.json');
@@ -21,11 +22,18 @@ module.exports = {
   processAdsBatch,
   getImagesFromUrls,
   Cache,
+  plugins,
 
   utils: {
+    canonicalizeAd: utils.canonicalizeAd,
+    dedupeAds: utils.dedupeAds,
+    applyAdPlugins: utils.applyAdPlugins,
+    runResultPlugins: utils.runResultPlugins,
     sortAds: utils.sortAds,
     filterAds: utils.filterAds,
     exportToCSV: utils.exportToCSV,
+    exportToJSONL: utils.exportToJSONL,
+    exportToParquet: utils.exportToParquet,
     exportToJSON: utils.exportToJSON,
     generateStats: utils.generateStats,
     displayTable: utils.displayTable,

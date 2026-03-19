@@ -44,6 +44,8 @@ const schemas = {
     cache: Joi.boolean(),
     cacheDir: Joi.string().pattern(/^[\w./-]+$/),
     cacheTTL: Joi.number().integer().min(60).max(86400),
+    dedupe: Joi.boolean(),
+    plugins: Joi.array().items(Joi.object()).max(20),
     delay: Joi.object({
       min: Joi.number().integer().min(500).max(10000),
       max: Joi.number().integer().min(500).max(10000)

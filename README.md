@@ -1,55 +1,16 @@
 # ikman-api-client
 
-A clean and practical Node.js client for [ikman.lk](https://ikman.lk).
+A practical Node.js + TypeScript-ready client for [ikman.lk](https://ikman.lk).
 
-Use it to:
-- Search listings with filtering and reliable sorting
-- Stream results page-by-page (memory efficient)
-- Cache search results automatically
-- Read full details of a single ad
-- Process many ad URLs in batch
-- Extract images from multiple ads
-- Export and analyze results
-- Use CLI tool for quick shell searches
+- Search listings with filtering, dedupe, plugins, and reliable sorting
+- Stream results page-by-page with `searchPages()`
+- Export analytics files in `csv`, `jsonl`, and `parquet`
+- Cache repeated searches for faster runs
+- Fetch full ad details and process URL batches
 
 [![npm version](https://img.shields.io/npm/v/ikman-api-client.svg)](https://www.npmjs.com/package/ikman-api-client)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
-
----
-
-## 📚 Table of Contents
-
-- [🚀 Why this package?](#-why-this-package)
-- [📦 Installation](#-installation)
-- [⚡ Quick Start](#-quick-start)
-  - [Search with filters](#search-with-filters)
-  - [Stream results page-by-page](#stream-results-page-by-page)
-  - [Use caching](#use-caching)
-  - [CLI tool](#cli-tool)
-- [💸 Reliable Price Sorting](#-reliable-price-sorting)
-- [🔍 Advanced Filtering](#-advanced-filtering)
-- [📡 Streaming API (Memory Efficient)](#-streaming-api-memory-efficient)
-- [💾 Caching Results](#-caching-results)
-- [🖥️ CLI Tool](#-cli-tool)
-- [🧩 API Overview](#-api-overview)
-- [🛠️ Utilities](#-utilities)
-- [📱 Examples](#-examples)
-- [🧪 Local Development](#-local-development)
-- [📝 Notes](#-notes)
-
----
-
-## 🚀 Why this package?
-
-`ikman-api-client` is built to be simple for beginners and useful for production scripts.
-
-- Beginner-friendly API (`search`, `getAd`, `batch`)
-- Advanced features (filtering, caching, streaming, CLI)
-- Stable retries and timeout controls
-- Built-in validation for safer input
-- TypeScript definitions included
-- Utility helpers for sorting, filtering, stats, and exports
 
 ---
 
@@ -59,7 +20,8 @@ Use it to:
 npm install ikman-api-client
 ```
 
-### For CLI tool (global)
+For CLI usage:
+
 ```bash
 npm install -g ikman-api-client
 ```
@@ -68,283 +30,306 @@ npm install -g ikman-api-client
 
 ## ⚡ Quick Start
 
-### Search with filters
+```ts
+import { search } from 'ikman-api-client';
 
-```js
-const { search } = require('ikman-api-client');
+const ads = await search('pixel phone', {
+  maxPages: 5,
+  sortBy: 'price-asc',
+  minPrice: 50000,
+  maxPrice: 250000,
+  location: 'Colombo',
+  dedupe: true,
+  cache: true,
+  cacheTTL: 3600,
+  verbose: true
+});
 
-async function run() {
-  const ads = await search('phone', {
-    maxPages: 5,
-    sortBy: 'price-asc',
-    minPrice: 50000,
-    maxPrice: 200000,
-    location: 'Colombo',
-    category: 'Electronics',
-    verbose: true
-  });
-
-  console.log(`Found ${ads.length} ads`);
-  console.log('Cheapest:', ads[0]?.title, ads[0]?.price);
-}
-
-run().catch(console.error);
+console.log(ads.length);
+console.log(ads[0]?.title, ads[0]?.price);
 ```
 
-### Stream results page-by-page
+---
 
-```js
-const { searchPages } = require('ikman-api-client');
+## 🧩 TypeScript-First API Docs
 
-async function run() {
-  let totalAds = 0;
+All methods are fully typed via `src/types.d.ts`.
 
-  for await (const pageResults of searchPages('car', { maxPages: 10 })) {
-    totalAds += pageResults.length;
-    console.log(`Page loaded: ${pageResults.length} ads (Total: ${totalAds})`);
-    
-    // Process each page without loading all in memory
-    pageResults.forEach(ad => {
-      console.log(`- ${ad.title}: ${ad.price}`);
-    });
+### `search(keyword, options)` / `searchListings(keyword, options)`
+
+Returns all matching ads in one array.
+
+```ts
+import { search, SearchOptions } from 'ikman-api-client';
+
+const options: SearchOptions = {
+  maxPages: 20,
+  respectAccessLimit: true,
+  timeout: 90000,
+  retries: 3,
+  sortBy: 'price-desc',
+  minPrice: 100000,
+  maxPrice: 2000000,
+  location: 'Colombo',
+  category: 'Cars',
+  dedupe: true,
+  plugins: [],
+  cache: true,
+  cacheDir: '.ikman-cache',
+  cacheTTL: 3600,
+  saveToFile: false,
+  fileName: 'ikman_results.json',
+  verbose: true,
+  includeRaw: false,
+  delay: { min: 1000, max: 2000 }
+};
+
+const rows = await search('hybrid car', options);
+```
+
+### `searchPages(keyword, options)`
+
+Async generator that yields one page at a time.
+
+```ts
+import { searchPages } from 'ikman-api-client';
+
+for await (const page of searchPages('apartment', {
+  maxPages: 10,
+  sortBy: 'price-asc',
+  location: 'Kandy',
+  dedupe: true,
+  verbose: false
+})) {
+  console.log('Page size:', page.length);
+}
+```
+
+### `getSearchSummary(keyword, options)`
+
+Returns result counts and pagination metadata.
+
+```ts
+import { getSearchSummary } from 'ikman-api-client';
+
+const summary = await getSearchSummary('scooter', {
+  sortBy: 'relevance',
+  maxPages: 1
+});
+
+console.log(summary.total_count, summary.max_accessible_pages);
+```
+
+### `getAd(url, options)` / `getAdDetails(url, options)`
+
+Fetches complete details of one ad.
+
+```ts
+import { getAd } from 'ikman-api-client';
+
+const ad = await getAd('https://ikman.lk/en/ad/example-slug', {
+  timeout: 30000,
+  retries: 3,
+  verbose: true,
+  includeRaw: false
+});
+
+console.log(ad.title, ad.price, ad.images.length);
+```
+
+### `batch(urls, options)` / `processAdsBatch(urls, options)`
+
+Processes many ad URLs with concurrency control.
+
+```ts
+import { batch } from 'ikman-api-client';
+
+const { results, errors, stats } = await batch([
+  'https://ikman.lk/en/ad/example-1',
+  'https://ikman.lk/en/ad/example-2'
+], {
+  concurrency: 3,
+  delay: 1000,
+  saveToFile: false,
+  fileName: 'ikman_batch_results.json',
+  verbose: true
+});
+
+console.log(stats, results.length, errors.length);
+```
+
+### `getImagesFromUrls(urls, options)`
+
+Extracts images from many ad URLs.
+
+```ts
+import { getImagesFromUrls } from 'ikman-api-client';
+
+const payload = await getImagesFromUrls([
+  'https://ikman.lk/en/ad/example-1',
+  'https://ikman.lk/en/ad/example-2'
+], {
+  concurrency: 2,
+  delay: 500,
+  verbose: true
+});
+
+console.log(payload.all_images.length);
+```
+
+---
+
+## 🔌 Plugin System (Custom Filters/Transforms)
+
+`search()` and `searchPages()` support `plugins` for ad-level and result-level transforms.
+
+### Built-in plugins
+
+```ts
+import { search, plugins } from 'ikman-api-client';
+
+const rows = await search('iphone', {
+  maxPages: 5,
+  plugins: [
+    plugins.normalizeLocationPlugin(),
+    plugins.scoreByPricePlugin({ min: 0, max: 500000 })
+  ]
+});
+```
+
+### Custom plugin
+
+```ts
+import { search, SearchPlugin } from 'ikman-api-client';
+
+const tagUrgentPlugin: SearchPlugin = {
+  name: 'tag-urgent',
+  transformAd(ad) {
+    return {
+      ...ad,
+      score_tag: ad.is_urgent ? 'priority' : 'normal'
+    };
+  },
+  transformResults(ads) {
+    return ads.sort((a, b) => Number(b.is_urgent) - Number(a.is_urgent));
   }
+};
 
-  console.log(`✅ Total: ${totalAds} ads`);
-}
-
-run().catch(console.error);
+const rows = await search('laptop', {
+  plugins: [tagUrgentPlugin]
+});
 ```
 
-### Use caching
+---
 
-```js
-const { search, Cache } = require('ikman-api-client');
+## 🧹 Duplicate Detection + Canonicalization
 
-async function run() {
-  // First call: fetches from ikman and caches
-  console.time('First search');
-  const ads1 = await search('pixel', {
-    maxPages: 5,
-    cache: true,  // Enable caching
-    cacheTTL: 3600  // 1 hour TTL
-  });
-  console.timeEnd('First search');
+Duplicate reposts are handled by canonical keys built from:
+- normalized title
+- normalized location
+- numeric price
 
-  // Second identical call: instant (from cache)
-  console.time('Cached search');
-  const ads2 = await search('pixel', {
-    maxPages: 5,
-    cache: true,
-    cacheTTL: 3600
-  });
-  console.timeEnd('Cached search');
+This runs by default (`dedupe: true`).
 
-  // Manage cache manually
-  const cache = new Cache();
-  console.log(cache.info());
-  cache.clear();
-}
+```ts
+import { search } from 'ikman-api-client';
 
-run().catch(console.error);
+const rows = await search('phone', {
+  dedupe: true // default true
+});
 ```
 
-### CLI tool
+You can disable it:
+
+```ts
+const rows = await search('phone', { dedupe: false });
+```
+
+---
+
+## 🛠️ Utilities
+
+```ts
+import { utils, Cache } from 'ikman-api-client';
+
+utils.sortAds(rows, 'price-asc');
+utils.filterAds(rows, { minPrice: 100000, location: 'Colombo' });
+utils.dedupeAds(rows);
+
+await utils.exportToCSV(rows, 'rows.csv');
+await utils.exportToJSONL(rows, 'rows.jsonl');
+await utils.exportToParquet(rows, 'rows.parquet');
+utils.exportToJSON(rows, 'rows.json');
+
+const cache = new Cache({ cacheTTL: 3600 });
+cache.info();
+```
+
+---
+
+## 🖥️ CLI
+
+### Search
 
 ```bash
-# Search with filters
-ikman search "pixel phone" --min-price 50000 --max-price 150000
+ikman search "pixel 8" --max-pages 5 --sort price-asc
+ikman search "house" --location Colombo --min-price 5000000 --max-price 20000000
+ikman search "car" --streaming --limit 100
+ikman search "laptop" --format csv -o laptops.csv
+```
 
-# Stream mode (memory efficient)
-ikman search "house" --streaming --limit 100
+### Export for analytics
 
-# Save to file
-ikman search "car" -o results.json
+```bash
+ikman export "car" --format csv --out cars.csv
+ikman export "car" --format jsonl --out cars.jsonl
+ikman export "car" --format parquet --out cars.parquet
+```
 
-# Save as CSV
-ikman search "laptop" --csv results.csv
+### Cache
 
-# Cache management
+```bash
 ikman cache info
 ikman cache clear
+ikman cache dir
 ```
 
 ---
 
-## 💸 Reliable Price Sorting
+## 📈 Benchmark Scripts
 
-ikman upstream sorting can sometimes be inconsistent.
-
-This package enforces client-side fallback sorting for:
-- `sortBy: 'price-asc'`
-- `sortBy: 'price-desc'`
-
-Returned arrays are correctly ordered by price**without** needing manual `.sort(...)`.
-
----
-
-## 🔍 Advanced Filtering
-
-Filter results on 4 dimensions:
-
-```js
-const { search } = require('ikman-api-client');
-
-const ads = await search('property', {
-  // Price range (in Rs)
-  minPrice: 1000000,
-  maxPrice: 10000000,
-  
-  // Location filter (partial match)
-  location: 'Colombo',
-  
-  // Category filter (exact match)
-  category: 'Real Estate',
-  
-  sortBy: 'price-asc'
-});
-```
-
-### How filtering works
-
-- **minPrice/maxPrice**: Numeric price comparison
-- **location**: Case-insensitive substring match
-- **category**: Exact string match
-
----
-
-## 📡 Streaming API (Memory Efficient)
-
-For large result sets, use `searchPages()` to process one page at a time:
-
-```js
-const { searchPages } = require('ikman-api-client');
-
-for await (const pageAds of searchPages('property', {
-  maxPages: 50,
-  minPrice: 1000000,
-  sortBy: 'price-asc'
-})) {
-  // pageAds = single page (typically 20-25 results)
-  // Process and discard before next page loads
-  
-  pageAds.forEach(ad => {
-    // Your processing logic
-  });
-}
-```
-
-Benefits:
-- **Memory efficient**: Only 1 page in memory at a time
-- **Responsive**: Start processing while fetching continues
-- **Filterable**: Apply filters per-page
-- **Sortable**: Respects sort options
-
----
-
-## 💾 Caching Results
-
-Cache search results to speed up batch operations:
-
-```js
-const { search, Cache } = require('ikman-api-client');
-
-// Option 1: Automatic via search()
-const ads = await search('pixel', {
-  cache: true,        // Enable caching
-  cacheTTL: 3600,     // 1 hour expiry (seconds)
-  cacheDir: './cache' // Custom cache dir (optional)
-});
-
-// Option 2: Manual cache management
-const cache = new Cache({
-  cacheDir: './.ikman-cache',
-  cacheTTL: 7200  // 2 hours
-});
-
-// Get cached data
-const cached = cache.get('pixel', { sortBy: 'price-asc' });
-
-// Store data manually
-cache.set('pixel', adsArray, { sortBy: 'price-asc' });
-
-// Clear all cache
-cache.clear();
-
-// View cache stats
-console.log(cache.info());
-// Output: { size: 2048576, files: 3, dir: '...', sizeGB: '0.00' }
-```
-
-Cache keys are generated from:
-- Keyword
-- sortBy, minPrice, maxPrice, location, category
-
-Same filters = same cache hit ✓
-
----
-
-## 🖥️ CLI Tool
-
-Global command-line tool for quick searches:
+Run these to compare runtime characteristics:
 
 ```bash
-npm install -g ikman-api-client
-ikman search <keyword> [options]
+npm run benchmark:cold      # cold cache search
+npm run benchmark:warm      # cold vs warm cache speedup
+npm run benchmark:stream    # search() vs searchPages()
+npm run benchmark           # all benchmarks
 ```
 
-### Commands
+Optional args:
 
 ```bash
-# Search examples
-ikman search "pixel 8"
-ikman search "samsung" --min-price 50000 --max-price 150000
-ikman search "house" --location Colombo --sort price-asc
-
-# Streaming mode (memory efficient for large result sets)
-ikman search "car" --streaming --limit 50
-
-# Save results
-ikman search "laptop" -o results.json
-ikman search "phone" --csv results.csv
-
-# Cache management
-ikman cache info          # Show cache stats
-ikman cache clear         # Clear all cache
-ikman cache dir           # Show cache location
-
-# Show info
-ikman info                # Package info
-ikman examples            # Usage examples
-```
-
-### CLI Options
-
-```
---max-pages, -p <n>      Maximum pages (default: 10)
---sort, -s               price-asc | price-desc | date-asc | date-desc | relevance
---min-price <n>          Minimum price filter (Rs)
---max-price <n>          Maximum price filter (Rs)
---location, -l <text>    Location filter
---category, -c <text>    Category filter
---output, -o <file>      Save to JSON file
---csv <file>             Save to CSV file
---limit <n>              Limit results to N items
---streaming              Use streaming mode (memory efficient)
---cache                  Enable caching (default: true)
---verbose, -v            Verbose output (default: true)
+node benchmarks/cold-cache.js "pixel" 8
+node benchmarks/warm-cache.js "car" 10
+node benchmarks/search-vs-pages.js "apartment" 20
 ```
 
 ---
 
-## 🧩 API Overview
+## ✅ Notes
 
-### `search(keyword, options)`
+- Price sorting (`price-asc`, `price-desc`) is reinforced client-side for consistency
+- `search()` returns full array (all fetched pages)
+- `searchPages()` yields page-by-page for memory efficiency
+- Respect ikman.lk terms and add delays for polite scraping
 
-Search listings by keyword with optional filters.
+---
 
-**Options:**
-- `maxPages` (1-1000, default: 100)
-- `sortBy` ('price-asc', 'price-desc', 'date-asc', 'date-desc', 'relevance')
-- `minPrice` (number) — Filter by minimum price
-- `maxPrice` (number) — Filter by maximum price
-- `location` (string) — Filter by location (substring match)
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## 📄 License
+
+MIT — see [LICENSE](LICENSE)

@@ -26,7 +26,8 @@ class Cache {
       minPrice: options.minPrice,
       maxPrice: options.maxPrice,
       location: options.location,
-      category: options.category
+      category: options.category,
+      dedupe: options.dedupe
     };
 
     const cacheStr = `${keyword}:${JSON.stringify(cacheableOptions)}`;

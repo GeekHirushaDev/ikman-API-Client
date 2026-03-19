@@ -7,6 +7,67 @@ const cliProgress = require('cli-progress');
 const Table = require('cli-table3');
 const { createObjectCsvWriter } = require('csv-writer');
 
+function normalizeText(value) {
+  if (!value) return '';
+  return value.toString().trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function canonicalizeAd(ad = {}) {
+  const title = normalizeText(ad.title);
+  const location = normalizeText(ad.location);
+  const price = Number.isFinite(ad.price_numeric) ? ad.price_numeric : parsePrice(ad.price);
+  const numericPrice = Number.isFinite(price) ? price : null;
+
+  return {
+    ...ad,
+    canonical_title: title || null,
+    canonical_location: location || null,
+    canonical_price: numericPrice,
+    canonical_key: [title || 'unknown', location || 'unknown', numericPrice ?? 'na'].join('|')
+  };
+}
+
+function dedupeAds(ads = []) {
+  const seen = new Set();
+  const deduped = [];
+
+  ads.forEach((ad) => {
+    const canonicalAd = ad.canonical_key ? ad : canonicalizeAd(ad);
+    const key = canonicalAd.canonical_key;
+
+    if (!seen.has(key)) {
+      seen.add(key);
+      deduped.push(canonicalAd);
+    }
+  });
+
+  return deduped;
+}
+
+function applyAdPlugins(ads = [], plugins = [], context = {}) {
+  if (!Array.isArray(plugins) || plugins.length === 0) {
+    return ads;
+  }
+
+  return ads.map((ad) => plugins.reduce((currentAd, plugin) => {
+    if (!plugin || typeof plugin.transformAd !== 'function') return currentAd;
+    const nextAd = plugin.transformAd(currentAd, context);
+    return nextAd || currentAd;
+  }, ad));
+}
+
+function runResultPlugins(ads = [], plugins = [], context = {}) {
+  if (!Array.isArray(plugins) || plugins.length === 0) {
+    return ads;
+  }
+
+  return plugins.reduce((currentAds, plugin) => {
+    if (!plugin || typeof plugin.transformResults !== 'function') return currentAds;
+    const nextAds = plugin.transformResults(currentAds, context);
+    return Array.isArray(nextAds) ? nextAds : currentAds;
+  }, ads);
+}
+
 const logger = {
   info: (msg) => console.log(chalk.blue('ℹ'), chalk.white(msg)),
   success: (msg) => console.log(chalk.green('✓'), chalk.white(msg)),
@@ -143,6 +204,64 @@ async function exportToCSV(ads, filename = 'ikman_export.csv') {
   logger.success(`📊 Exported ${ads.length} ads to ${filename}`);
 }
 
+async function exportToJSONL(data, filename = 'ikman_export.jsonl') {
+  if (!Array.isArray(data) || data.length === 0) {
+    logger.warn('No data to export');
+    return;
+  }
+
+  const jsonl = data.map((item) => JSON.stringify(item)).join('\n');
+  fs.writeFileSync(filename, `${jsonl}\n`);
+  logger.success(`🧾 Exported ${data.length} record(s) to ${filename}`);
+}
+
+async function exportToParquet(data, filename = 'ikman_export.parquet') {
+  if (!Array.isArray(data) || data.length === 0) {
+    logger.warn('No data to export');
+    return;
+  }
+
+  let parquet;
+  try {
+    parquet = require('parquetjs-lite');
+  } catch {
+    throw new Error('Parquet export requires "parquetjs-lite" dependency. Run: npm install parquetjs-lite');
+  }
+
+  const sample = data[0];
+  const schemaDefinition = {};
+  Object.entries(sample).forEach(([key, value]) => {
+    if (typeof value === 'number') {
+      schemaDefinition[key] = { type: Number.isInteger(value) ? 'INT64' : 'DOUBLE', optional: true };
+    } else if (typeof value === 'boolean') {
+      schemaDefinition[key] = { type: 'BOOLEAN', optional: true };
+    } else {
+      schemaDefinition[key] = { type: 'UTF8', optional: true };
+    }
+  });
+
+  const schema = new parquet.ParquetSchema(schemaDefinition);
+  const writer = await parquet.ParquetWriter.openFile(schema, filename);
+
+  for (const row of data) {
+    const serializable = {};
+    Object.entries(row).forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        serializable[key] = null;
+      } else if (typeof value === 'object') {
+        serializable[key] = JSON.stringify(value);
+      } else {
+        serializable[key] = value;
+      }
+    });
+    // eslint-disable-next-line no-await-in-loop
+    await writer.appendRow(serializable);
+  }
+
+  await writer.close();
+  logger.success(`🧱 Exported ${data.length} record(s) to ${filename}`);
+}
+
 function exportToJSON(data, filename = 'ikman_export.json') {
   fs.writeFileSync(filename, JSON.stringify(data, null, 2));
   const count = Array.isArray(data) ? data.length : 1;
@@ -258,9 +377,16 @@ module.exports = {
   displayTable,
   formatPrice,
   parsePrice,
+  normalizeText,
+  canonicalizeAd,
+  dedupeAds,
+  applyAdPlugins,
+  runResultPlugins,
   sortAds,
   filterAds,
   exportToCSV,
+  exportToJSONL,
+  exportToParquet,
   exportToJSON,
   delay,
   extractNumber,

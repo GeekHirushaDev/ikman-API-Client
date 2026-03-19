@@ -2,9 +2,10 @@
 
 /**
  * CLI tool for ikman-api-client
- * Usage: ikman search <keyword> [options]
- *        ikman info
- *        ikman cache [clear|info]
+ * Usage:
+ *   ikman search <keyword> [options]
+ *   ikman export <keyword> --format parquet|jsonl|csv [options]
+ *   ikman cache <info|clear|dir>
  */
 
 const yargs = require('yargs/yargs');
@@ -14,11 +15,11 @@ const {
   searchListings,
   searchPages,
   Cache,
-  constants,
+  utils,
   version
 } = require('../src/index');
 
-const argv = yargs(hideBin(process.argv))
+const cli = yargs(hideBin(process.argv))
   .command('search <keyword>', 'Search for listings on ikman.lk', (yargs) => {
     yargs
       .positional('keyword', {
@@ -66,8 +67,14 @@ const argv = yargs(hideBin(process.argv))
         describe: 'Save results to JSON file (e.g., results.json)',
         type: 'string'
       })
-      .option('csv', {
-        describe: 'Save results to CSV file (e.g., results.csv)',
+      .option('format', {
+        alias: 'f',
+        describe: 'Export format when --output is provided',
+        choices: ['json', 'csv', 'jsonl', 'parquet'],
+        default: 'json'
+      })
+      .option('file', {
+        describe: 'Alternative alias for output file',
         type: 'string'
       })
       .option('limit', {
@@ -86,12 +93,73 @@ const argv = yargs(hideBin(process.argv))
         default: true
       });
   }, handleSearchCommand)
-  .command('cache', 'Manage cache', (yargs) => {
+  .command('export <keyword>', 'Search and export for analytics workflows', (yargs) => {
     yargs
-      .command('clear', 'Clear all cached results', {}, handleCacheClear)
-      .command('info', 'Show cache information', {}, handleCacheInfo)
-      .command('dir', 'Show cache directory', {}, handleCacheDir);
-  })
+      .positional('keyword', {
+        describe: 'Search keyword',
+        type: 'string'
+      })
+      .option('format', {
+        alias: 'f',
+        describe: 'Output format',
+        choices: ['parquet', 'jsonl', 'csv'],
+        demandOption: true
+      })
+      .option('out', {
+        alias: 'o',
+        describe: 'Output file path',
+        type: 'string'
+      })
+      .option('max-pages', {
+        alias: 'p',
+        describe: 'Maximum pages to fetch',
+        type: 'number',
+        default: 10
+      })
+      .option('sort', {
+        alias: 's',
+        describe: 'Sort method',
+        type: 'string',
+        choices: ['price-asc', 'price-desc', 'date-asc', 'date-desc', 'relevance'],
+        default: 'price-asc'
+      })
+      .option('min-price', {
+        describe: 'Minimum price filter (Rs)',
+        type: 'number'
+      })
+      .option('max-price', {
+        describe: 'Maximum price filter (Rs)',
+        type: 'number'
+      })
+      .option('location', {
+        alias: 'l',
+        describe: 'Location filter',
+        type: 'string'
+      })
+      .option('category', {
+        alias: 'c',
+        describe: 'Category filter',
+        type: 'string'
+      })
+      .option('cache', {
+        describe: 'Use caching',
+        type: 'boolean',
+        default: true
+      })
+      .option('verbose', {
+        alias: 'v',
+        describe: 'Verbose output',
+        type: 'boolean',
+        default: true
+      });
+  }, handleExportCommand)
+  .command('cache <action>', 'Manage cache', (yargs) => {
+    yargs
+      .positional('action', {
+        describe: 'Cache action',
+        choices: ['clear', 'info', 'dir']
+      });
+  }, handleCacheCommand)
   .command('info', 'Show package information', {}, handleInfoCommand)
   .command('examples', 'Show usage examples', {}, handleExamplesCommand)
   .option('help', {
@@ -99,20 +167,20 @@ const argv = yargs(hideBin(process.argv))
     describe: 'Show help',
     type: 'boolean'
   })
-  .option('version', {
-    alias: 'V',
-    describe: 'Show version',
-    type: 'boolean'
-  })
+  .version(version)
+  .alias('version', 'V')
   .strict()
   .epilogue('For more information, visit: https://github.com/GeekHirushaDev/ikman-API-Client')
-  .parseSync();
+  .help();
+
+cli.parse();
 
 /**
  * Handle search command
  */
 async function handleSearchCommand(args) {
   try {
+    const outputFile = args.output || args.file;
     const options = {
       maxPages: args.maxPages,
       sortBy: args.sort,
@@ -122,8 +190,7 @@ async function handleSearchCommand(args) {
       category: args.category,
       cache: args.cache,
       verbose: args.verbose,
-      saveToFile: !!args.output,
-      fileName: args.output
+      saveToFile: false
     };
 
     if (args.streaming) {
@@ -148,7 +215,6 @@ async function handleSearchCommand(args) {
 
       console.log(chalk.green('✓'), chalk.white(`\n✅ Streaming complete! Total: ${totalResults} ads`));
     } else {
-      // Standard mode: load all results
       let results = await searchListings(args.keyword, options);
 
       if (args.limit) {
@@ -157,10 +223,9 @@ async function handleSearchCommand(args) {
 
       displayCliResults(results);
 
-      if (args.csv) {
-        const { exportToCSV } = require('../src/utils');
-        await exportToCSV(results, args.csv);
-      } else if (!args.output) {
+      if (outputFile) {
+        await exportByFormat(results, args.format, outputFile);
+      } else {
         console.log(chalk.cyan('💡'), chalk.white(`Tip: Use ${chalk.yellow('-o results.json')} to save results`));
       }
     }
@@ -171,13 +236,36 @@ async function handleSearchCommand(args) {
 }
 
 /**
- * Handle cache clear command
+ * Handle export command
  */
-function handleCacheClear() {
+async function handleExportCommand(args) {
   try {
-    const cache = new Cache();
-    cache.clear();
-    console.log(chalk.green('✓'), chalk.white('Cache cleared successfully'));
+    const options = {
+      maxPages: args.maxPages,
+      sortBy: args.sort,
+      minPrice: args.minPrice,
+      maxPrice: args.maxPrice,
+      location: args.location,
+      category: args.category,
+      cache: args.cache,
+      verbose: args.verbose
+    };
+
+    const rows = await searchListings(args.keyword, options);
+
+    if (!rows.length) {
+      console.log(chalk.yellow('⚠'), chalk.white('No results to export'));
+      return;
+    }
+
+    const defaultFileByFormat = {
+      parquet: 'ikman_export.parquet',
+      jsonl: 'ikman_export.jsonl',
+      csv: 'ikman_export.csv'
+    };
+
+    const outputFile = args.out || defaultFileByFormat[args.format];
+    await exportByFormat(rows, args.format, outputFile);
   } catch (err) {
     console.error(chalk.red('✗'), chalk.red(err.message));
     process.exit(1);
@@ -185,13 +273,24 @@ function handleCacheClear() {
 }
 
 /**
- * Handle cache info command
+ * Handle cache command
  */
-function handleCacheInfo() {
+function handleCacheCommand(args) {
   try {
     const cache = new Cache();
-    const info = cache.info();
 
+    if (args.action === 'clear') {
+      cache.clear();
+      console.log(chalk.green('✓'), chalk.white('Cache cleared successfully'));
+      return;
+    }
+
+    if (args.action === 'dir') {
+      console.log(cache.cacheDir);
+      return;
+    }
+
+    const info = cache.info();
     if (info.error) {
       console.log(chalk.yellow('⚠'), chalk.white('Cache is empty'));
       return;
@@ -201,19 +300,6 @@ function handleCacheInfo() {
     console.log(chalk.white(`  Files: ${info.files}`));
     console.log(chalk.white(`  Size: ${info.sizeGB} GB (${info.size} bytes)`));
     console.log(chalk.white(`  Location: ${info.dir}`));
-  } catch (err) {
-    console.error(chalk.red('✗'), chalk.red(err.message));
-    process.exit(1);
-  }
-}
-
-/**
- * Handle cache dir command
- */
-function handleCacheDir() {
-  try {
-    const cache = new Cache();
-    console.log(cache.cacheDir);
   } catch (err) {
     console.error(chalk.red('✗'), chalk.red(err.message));
     process.exit(1);
@@ -237,6 +323,7 @@ function handleInfoCommand() {
   console.log(chalk.yellow('  ikman search "pixel phone" --min-price 50000 --max-price 150000'));
   console.log(chalk.yellow('  ikman search "car" --sort price-asc -p 5 -o results.json'));
   console.log(chalk.yellow('  ikman search "house" --streaming --limit 100'));
+  console.log(chalk.yellow('  ikman export "car" --format parquet --out cars.parquet'));
   console.log(chalk.white('\n'));
 }
 
@@ -265,7 +352,12 @@ function handleExamplesCommand() {
   console.log(chalk.yellow('  ikman search "phone" -o results.json\n'));
 
   console.log(chalk.greenBright('Save results to CSV:'));
-  console.log(chalk.yellow('  ikman search "laptop" --csv results.csv\n'));
+  console.log(chalk.yellow('  ikman search "laptop" --format csv -o results.csv\n'));
+
+  console.log(chalk.greenBright('Analytics export command:'));
+  console.log(chalk.yellow('  ikman export "car" --format parquet --out cars.parquet'));
+  console.log(chalk.yellow('  ikman export "car" --format jsonl --out cars.jsonl'));
+  console.log(chalk.yellow('  ikman export "car" --format csv --out cars.csv\n'));
 
   console.log(chalk.greenBright('Manage cache:'));
   console.log(chalk.yellow('  ikman cache info    # Show cache info'));
@@ -305,4 +397,23 @@ function displayCliResults(results) {
   if (results.length > 20) {
     console.log(chalk.blue(`... and ${results.length - 20} more results\n`));
   }
+}
+
+async function exportByFormat(rows, format, outputFile) {
+  if (format === 'csv') {
+    await utils.exportToCSV(rows, outputFile);
+    return;
+  }
+
+  if (format === 'jsonl') {
+    await utils.exportToJSONL(rows, outputFile);
+    return;
+  }
+
+  if (format === 'parquet') {
+    await utils.exportToParquet(rows, outputFile);
+    return;
+  }
+
+  utils.exportToJSON(rows, outputFile);
 }
