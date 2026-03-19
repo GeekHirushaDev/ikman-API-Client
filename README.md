@@ -1,16 +1,64 @@
 # ikman-api-client
 
-A practical Node.js + TypeScript-ready client for [ikman.lk](https://ikman.lk).
+✨ A modern Node.js + TypeScript-friendly client for [ikman.lk](https://ikman.lk).
 
-- Search listings with filtering, dedupe, plugins, and reliable sorting
-- Stream results page-by-page with `searchPages()`
-- Export analytics files in `csv`, `jsonl`, and `parquet`
-- Cache repeated searches for faster runs
-- Fetch full ad details and process URL batches
+Built for both simple scripts and serious data workflows:
+- Fast keyword search with reliable sorting
+- Advanced filtering (price/location/category)
+- Duplicate detection + canonicalization
+- Plugin pipeline for custom transforms/ranking
+- Streaming pagination for memory efficiency
+- Analytics export (`csv`, `jsonl`, `parquet`)
+- Smart local caching for repeated runs
 
 [![npm version](https://img.shields.io/npm/v/ikman-api-client.svg)](https://www.npmjs.com/package/ikman-api-client)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg)](src/types.d.ts)
+[![Plugins](https://img.shields.io/badge/Plugins-Customizable-8A2BE2.svg)](#-plugin-examples)
+[![Streaming](https://img.shields.io/badge/Streaming-searchPages-1E90FF.svg)](#searchpages)
+[![Export](https://img.shields.io/badge/Export-CSV%20%7C%20JSONL%20%7C%20Parquet-FF8C00.svg)](#-cli-usage)
+[![Cache](https://img.shields.io/badge/Cache-File--Based-20B2AA.svg)](#caching)
+
+---
+
+## 📚 Table of Contents
+
+- [🚀 Why This Package](#-why-this-package)
+- [📦 Installation](#-installation)
+- [⚡ Quick Start](#-quick-start)
+- [🧠 Core Concepts](#-core-concepts)
+  - [Reliable Sorting](#reliable-sorting)
+  - [Dedupe + Canonicalization](#dedupe--canonicalization)
+  - [Plugin Pipeline](#plugin-pipeline)
+  - [Caching](#caching)
+- [🧩 TypeScript-First API](#-typescript-first-api)
+  - [search / searchListings](#search--searchlistings)
+  - [searchPages](#searchpages)
+  - [getSearchSummary](#getsearchsummary)
+  - [getAd / getAdDetails](#getad--getaddetails)
+  - [batch / processAdsBatch](#batch--processadsbatch)
+  - [getImagesFromUrls](#getimagesfromurls)
+- [🔌 Plugin Examples](#-plugin-examples)
+- [🛠️ Utilities](#️-utilities)
+- [🖥️ CLI Usage](#️-cli-usage)
+- [📈 Benchmarks](#-benchmarks)
+- [📂 Local Examples](#-local-examples)
+- [✅ Best Practices](#-best-practices)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+---
+
+## 🚀 Why This Package
+
+`ikman-api-client` gives you a clean API over ikman search pages, with practical features that reduce manual work:
+
+- No manual HTML parsing in your app
+- Strong defaults with customizable options
+- Works for quick scripts and analytics pipelines
+- Typed API surface for safer developer experience
+- CLI support for non-dev workflows
 
 ---
 
@@ -20,7 +68,7 @@ A practical Node.js + TypeScript-ready client for [ikman.lk](https://ikman.lk).
 npm install ikman-api-client
 ```
 
-For CLI usage:
+Install globally for CLI usage:
 
 ```bash
 npm install -g ikman-api-client
@@ -45,19 +93,47 @@ const ads = await search('pixel phone', {
   verbose: true
 });
 
-console.log(ads.length);
-console.log(ads[0]?.title, ads[0]?.price);
+console.log(`Found: ${ads.length}`);
+console.log('Top result:', ads[0]?.title, ads[0]?.price);
 ```
 
 ---
 
-## 🧩 TypeScript-First API Docs
+## 🧠 Core Concepts
 
-All methods are fully typed via `src/types.d.ts`.
+### Reliable Sorting
 
-### `search(keyword, options)` / `searchListings(keyword, options)`
+`price-asc` and `price-desc` are reinforced client-side to keep ordering stable even if upstream sort is inconsistent.
 
-Returns all matching ads in one array.
+### Dedupe + Canonicalization
+
+Duplicates are detected from canonical fields:
+- normalized title
+- normalized location
+- numeric price
+
+Enabled by default with `dedupe: true`.
+
+### Plugin Pipeline
+
+Add custom ad transforms and result transforms via `plugins`.
+
+### Caching
+
+File-based cache improves repeated searches.
+- `cache` (boolean)
+- `cacheTTL` (seconds)
+- `cacheDir` (directory)
+
+---
+
+## 🧩 TypeScript-First API
+
+All types are provided in `src/types.d.ts`.
+
+### search / searchListings
+
+Returns all results in one array.
 
 ```ts
 import { search, SearchOptions } from 'ikman-api-client';
@@ -87,9 +163,9 @@ const options: SearchOptions = {
 const rows = await search('hybrid car', options);
 ```
 
-### `searchPages(keyword, options)`
+### searchPages
 
-Async generator that yields one page at a time.
+Streams one page at a time (memory efficient):
 
 ```ts
 import { searchPages } from 'ikman-api-client';
@@ -105,9 +181,9 @@ for await (const page of searchPages('apartment', {
 }
 ```
 
-### `getSearchSummary(keyword, options)`
+### getSearchSummary
 
-Returns result counts and pagination metadata.
+Quick metadata for total and accessible result counts:
 
 ```ts
 import { getSearchSummary } from 'ikman-api-client';
@@ -120,9 +196,9 @@ const summary = await getSearchSummary('scooter', {
 console.log(summary.total_count, summary.max_accessible_pages);
 ```
 
-### `getAd(url, options)` / `getAdDetails(url, options)`
+### getAd / getAdDetails
 
-Fetches complete details of one ad.
+Get full details for one listing:
 
 ```ts
 import { getAd } from 'ikman-api-client';
@@ -137,9 +213,9 @@ const ad = await getAd('https://ikman.lk/en/ad/example-slug', {
 console.log(ad.title, ad.price, ad.images.length);
 ```
 
-### `batch(urls, options)` / `processAdsBatch(urls, options)`
+### batch / processAdsBatch
 
-Processes many ad URLs with concurrency control.
+Process multiple ad URLs with concurrency:
 
 ```ts
 import { batch } from 'ikman-api-client';
@@ -158,9 +234,9 @@ const { results, errors, stats } = await batch([
 console.log(stats, results.length, errors.length);
 ```
 
-### `getImagesFromUrls(urls, options)`
+### getImagesFromUrls
 
-Extracts images from many ad URLs.
+Extract images from multiple URLs:
 
 ```ts
 import { getImagesFromUrls } from 'ikman-api-client';
@@ -179,9 +255,7 @@ console.log(payload.all_images.length);
 
 ---
 
-## 🔌 Plugin System (Custom Filters/Transforms)
-
-`search()` and `searchPages()` support `plugins` for ad-level and result-level transforms.
+## 🔌 Plugin Examples
 
 ### Built-in plugins
 
@@ -202,47 +276,16 @@ const rows = await search('iphone', {
 ```ts
 import { search, SearchPlugin } from 'ikman-api-client';
 
-const tagUrgentPlugin: SearchPlugin = {
-  name: 'tag-urgent',
-  transformAd(ad) {
-    return {
-      ...ad,
-      score_tag: ad.is_urgent ? 'priority' : 'normal'
-    };
-  },
-  transformResults(ads) {
-    return ads.sort((a, b) => Number(b.is_urgent) - Number(a.is_urgent));
+const prioritizeUrgentPlugin: SearchPlugin = {
+  name: 'prioritize-urgent',
+  transformResults(rows) {
+    return rows.sort((a, b) => Number(b.is_urgent) - Number(a.is_urgent));
   }
 };
 
 const rows = await search('laptop', {
-  plugins: [tagUrgentPlugin]
+  plugins: [prioritizeUrgentPlugin]
 });
-```
-
----
-
-## 🧹 Duplicate Detection + Canonicalization
-
-Duplicate reposts are handled by canonical keys built from:
-- normalized title
-- normalized location
-- numeric price
-
-This runs by default (`dedupe: true`).
-
-```ts
-import { search } from 'ikman-api-client';
-
-const rows = await search('phone', {
-  dedupe: true // default true
-});
-```
-
-You can disable it:
-
-```ts
-const rows = await search('phone', { dedupe: false });
 ```
 
 ---
@@ -262,12 +305,12 @@ await utils.exportToParquet(rows, 'rows.parquet');
 utils.exportToJSON(rows, 'rows.json');
 
 const cache = new Cache({ cacheTTL: 3600 });
-cache.info();
+console.log(cache.info());
 ```
 
 ---
 
-## 🖥️ CLI
+## 🖥️ CLI Usage
 
 ### Search
 
@@ -286,7 +329,7 @@ ikman export "car" --format jsonl --out cars.jsonl
 ikman export "car" --format parquet --out cars.parquet
 ```
 
-### Cache
+### Cache commands
 
 ```bash
 ikman cache info
@@ -296,18 +339,16 @@ ikman cache dir
 
 ---
 
-## 📈 Benchmark Scripts
-
-Run these to compare runtime characteristics:
+## 📈 Benchmarks
 
 ```bash
-npm run benchmark:cold      # cold cache search
-npm run benchmark:warm      # cold vs warm cache speedup
-npm run benchmark:stream    # search() vs searchPages()
-npm run benchmark           # all benchmarks
+npm run benchmark:cold
+npm run benchmark:warm
+npm run benchmark:stream
+npm run benchmark
 ```
 
-Optional args:
+With optional args:
 
 ```bash
 node benchmarks/cold-cache.js "pixel" 8
@@ -317,12 +358,26 @@ node benchmarks/search-vs-pages.js "apartment" 20
 
 ---
 
-## ✅ Notes
+## 📂 Local Examples
 
-- Price sorting (`price-asc`, `price-desc`) is reinforced client-side for consistency
-- `search()` returns full array (all fetched pages)
-- `searchPages()` yields page-by-page for memory efficiency
-- Respect ikman.lk terms and add delays for polite scraping
+```bash
+npm run example
+npm run example:ad
+npm run example:batch
+npm run example:advanced
+npm run example:images
+npm run example:plugins
+```
+
+---
+
+## ✅ Best Practices
+
+- Keep `delay.min` and `delay.max` at respectful values
+- Use `searchPages()` for large-volume workflows
+- Keep `cache` enabled for repeated queries
+- Add custom plugins for project-specific ranking/normalization
+- Verify target URLs before running batch modes
 
 ---
 

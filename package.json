@@ -18,6 +18,7 @@
     "example:batch": "node examples/batch.js",
     "example:advanced": "node examples/advanced.js",
     "example:images": "node examples/images.js",
+    "example:plugins": "node examples/plugins.js",
     "benchmark:cold": "node benchmarks/cold-cache.js",
     "benchmark:warm": "node benchmarks/warm-cache.js",
     "benchmark:stream": "node benchmarks/search-vs-pages.js",
