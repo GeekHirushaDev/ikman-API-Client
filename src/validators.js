@@ -33,10 +33,17 @@ const schemas = {
       'date-desc',
       'relevance'
     ),
+    minPrice: Joi.number().integer().min(0).max(1000000000),
+    maxPrice: Joi.number().integer().min(0).max(1000000000),
+    location: Joi.string().min(1).max(100),
+    category: Joi.string().min(1).max(100),
     saveToFile: Joi.boolean(),
     fileName: Joi.string().pattern(/\.json$/),
     verbose: Joi.boolean(),
     includeRaw: Joi.boolean(),
+    cache: Joi.boolean(),
+    cacheDir: Joi.string().pattern(/^[\w./-]+$/),
+    cacheTTL: Joi.number().integer().min(60).max(86400),
     delay: Joi.object({
       min: Joi.number().integer().min(500).max(10000),
       max: Joi.number().integer().min(500).max(10000)
@@ -46,6 +53,12 @@ const schemas = {
       }
       return value;
     })
+  }).custom((value, helpers) => {
+    if (value.minPrice !== undefined && value.maxPrice !== undefined
+        && value.minPrice > value.maxPrice) {
+      return helpers.error('minPrice.max');
+    }
+    return value;
   }),
 
   adPageOptions: Joi.object({
