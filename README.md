@@ -55,12 +55,6 @@ Use it to:
 npm install ikman-api-client
 ```
 
-If Puppeteer download fails during install:
-
-```bash
-PUPPETEER_SKIP_DOWNLOAD=1 npm install
-```
-
 ---
 
 ## ⚡ Quick Start

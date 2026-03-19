@@ -13,12 +13,6 @@ Thanks for contributing to ikman-api-client.
 npm install
 ```
 
-If Puppeteer browser download is blocked in your environment:
-
-```bash
-PUPPETEER_SKIP_DOWNLOAD=1 npm install
-```
-
 ## Development
 
 Run checks before opening a PR:
