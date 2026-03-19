@@ -1,6 +1,6 @@
 {
   "name": "ikman-api-client",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Complete API client for ikman.lk - search listings, read individual ads, batch processing, filtering, and caching",
   "main": "src/index.js",
   "types": "src/types.d.ts",
